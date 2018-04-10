@@ -14,7 +14,7 @@ Par défaut, création des users:
 
 
 Fichiers de configuration:
-- CorsConfig : configuration CORS
+- CorsConfig : configuration CORS (un peu spéciale car on utilise à la fois Spring Boot, Spring Security et Spring OAuth2, on ne peut pas utiliser la configuration cors habituelle de Spring boot avec corsFilter ou le filtre Spring MVC de base)
 - RepositoryConfig: export des identifiants "id" sur les entités
 - SecurityConfig: configuration Spring security, comptes des utilisations du serveur Supervision
 - SwaggerConfiguration: configuration de swagger (documentation de l'API) http://localhost:8091/api/v1.0/swagger-ui.html
@@ -37,7 +37,7 @@ docker run --rm --name supervision-server-container -d -p 8091:8091 supervision-
 
 Pour utiliser à distance:
 
-Tagger l'image: docker tag <nom-de-l-image> <nom-du-compte-docker>/<nom-de-l-image>:<nom-du-tag>
+Tagger l'image: docker tag _nom-de-l-image_ _nom-du-compte-docker_/_nom-de-l-image_:_nom-du-tag_
 
-Puis: docker push <nom-du-compte-docker>/<nom-de-l-image>:<nom-du-tag>
+Puis: docker push _nom-du-compte-docker_/_nom-de-l-image_:_nom-du-tag_
 

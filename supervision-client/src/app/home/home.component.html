@@ -1,10 +1,16 @@
-Home Page
+<!--The content below is only a placeholder and can be replaced.-->
+<div style="text-align:center">
+  <h1>
+    Welcome {{ currentUser?.firstName }}!
+  </h1>
+</div>
+
 
 <a [routerLink]="['/login']">
   Login
 </a>
 
-<a (click)="logout()" href="#">
+<a (click)="logout()" href="javascript:void(0)">
   Logout
 </a>
 

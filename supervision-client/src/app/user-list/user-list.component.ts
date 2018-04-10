@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService } from '../shared/services/authentication.service';
+import { AuthenticationService } from '../shared/technical/authentication.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-user-list',
@@ -10,13 +11,15 @@ export class UserListComponent implements OnInit {
 
   theTestValue = '';
 
-  constructor(private authenticationService : AuthenticationService) { }
+  theTestValue2 = '';
+
+  constructor(private http: HttpClient) { }
 
   ngOnInit() {
   }
 
   testValue() {
-    this.authenticationService.getResource('http://localhost:8091/api/v1.0/user/1')
+    this.http.get<string>('/api/user/1')
       .subscribe(
         data => this.theTestValue = data,
         error => this.theTestValue = 'Error'
@@ -24,9 +27,9 @@ export class UserListComponent implements OnInit {
   }
 
   testValue2() {
-    this.authenticationService.getResource('http://localhost:8091/api/v1.0/user2/1')
+    this.http.get<string>('/api/currentAccount')
       .subscribe(
-        data => this.theTestValue = data,
+        data => this.theTestValue2 = data,
         error => this.theTestValue = 'Error'
       );
   }

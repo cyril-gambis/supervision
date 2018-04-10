@@ -35,13 +35,36 @@ public class DatabaseInit {
 			System.out.println("Administrator account found in database");
 		} else {
 			System.out.println("Administrator account not found in database, it will be created");
-			accountRepository.save(new Account("admin", "admin", Role.ADMIN));
+			
+			User adminUser = userRepository.findByFirstName("Admin");
+			if (adminUser == null) {	
+				adminUser = userRepository.save(new User("Admin", ""));
+			}
+			
+			accountRepository.save(new Account("admin", "admin", Role.ADMIN, adminUser));
 		}
 
-
-		User tom = userRepository.save(new User("Tom", "Moloch"));
-		userRepository.save(tom);
 		
+				
 	}
+
+	/* Example for  launching a script in the classpath at startup
+	@Value("classpath:schema.sql")
+	private Resource schemaScript;
+
+	@Bean
+	public DataSourceInitializer dataSourceInitializer(DataSource dataSource) {
+	    DataSourceInitializer initializer = new DataSourceInitializer();
+	    initializer.setDataSource(dataSource);
+	    initializer.setDatabasePopulator(databasePopulator());
+	    return initializer;
+	}
+	 
+	private DatabasePopulator databasePopulator() {
+	    ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+	    populator.addScript(schemaScript);
+	    return populator;
+	}
+	*/
 	
 }

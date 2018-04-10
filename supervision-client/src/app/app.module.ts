@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { UserListComponent } from './user-list/user-list.component';
@@ -10,13 +10,12 @@ import { LoginComponent } from './login/login.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { AppRoutingModule } from './app-routing/app-routing.module';
 import { HomeComponent } from './home/home.component';
-import { AuthenticationService } from './shared/services/authentication.service';
+import { AuthenticationService } from './shared/technical/authentication.service';
 import { UserService } from './shared/services/user.service';
-
-
-export function tokenGetter() {
-  return localStorage.getItem('access_token');
-}
+import { ApiEndpointInterceptor } from './shared/technical/api-endpoint.interceptor';
+import { JwtRequestInterceptor } from './shared/technical/jwt-request.interceptor';
+import { TokenService } from './shared/technical/token.service';
+import { AuthGuard } from './shared/guards/auth-guard';
 
 @NgModule({
   declarations: [
@@ -34,8 +33,20 @@ export function tokenGetter() {
     AppRoutingModule
   ],
   providers: [
+    AuthGuard,
     AuthenticationService,
-    UserService
+    UserService,
+    TokenService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ApiEndpointInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtRequestInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

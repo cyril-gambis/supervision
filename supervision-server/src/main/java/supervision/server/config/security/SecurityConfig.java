@@ -1,4 +1,4 @@
-package supervision.server.config;
+package supervision.server.config.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,7 +20,12 @@ import supervision.server.account.Account;
 import supervision.server.account.repository.AccountRepository;
 
 /**
- * Configuration of Spring Security and CORS
+ * Supervision is based on OAuth: an authorization server and a resource server,
+ * except the same application has both roles
+ * 
+ * In this class, we have the common parts of the security config, the more specific
+ * parts are in AuthorizationServerConfig.java and ResourceServerConfig.java,
+ * and the JWT configuration (token store...) is in JwtConfig
  * 
  * @author Cyril Gambis
  */
@@ -59,6 +64,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	/**
 	 * Retrieve accounts in database
 	 * 
+	 * The UserDetails is the "Principal" that is store in the spring security context upon
+	 * authorization/authentication
+	 * 
 	 * @author Cyril Gambis
 	 * @see org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter#userDetailsService()
 	 */
@@ -82,6 +90,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		};
 	}
 /*
+ * This CORS config is not compatible with Spring OAuth (because of the orders
+ * of Spring's Security filters).
+ * 
+ * The Cors Config is done in CorsConfig.java
+ * 
+ *
 	@Bean
 	public CorsFilter corsFilter() {
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
@@ -95,27 +109,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		return new CorsFilter(source);
 	}
 */	
-	/*
-	http
-	.cors()
-	.and()
-	.requestMatchers()
-	.and()
-	.authorizeRequests()
-	.antMatchers("/actuator/**", "/api-docs/**", "/connectedUser", "/hello").permitAll()
-	.antMatchers("/supervision/**").authenticated()
-	*/
+
+
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
-		
-			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+
+			// Stateless - no session for JWT mode
+			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 		
 			.and()
 			.authorizeRequests()
-			//.antMatchers("/login").permitAll()
-			.anyRequest().permitAll() // .authenticated()
-	;		
+			.antMatchers("/oauth/**").permitAll()
+			.anyRequest().authenticated()
+	;
 //			.and()
 			// form login configuration isn't necessary for Password flow
 //			.formLogin().permitAll();
@@ -131,5 +138,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.and()
 			.csrf().disable();			
 */	}
-
+	
 }

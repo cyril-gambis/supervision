@@ -1,4 +1,4 @@
-package supervision.server.config;
+package supervision.server.config.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,16 +16,10 @@ import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 // Resource server has authority to define permission for any endpoint
 @EnableResourceServer
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
-	
-	// Same token service as the authorization server, because same code base,
-	// so we are reusing the same bean (not necessary if the two server runs
-	// separately)
-//	@Autowired
-//	private ResourceServerTokenServices tokenServices;
 
 	@Value("${security.jwt.resource-ids}")
 	private String resourceIds;
-	
+
 	@Autowired
 	private DefaultTokenServices tokenServices;
 	
@@ -35,20 +29,5 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 		resources.tokenServices(tokenServices);
 	}
 
-	
-/*	
-	@Override
-	public void configure(HttpSecurity http) throws Exception {
-		http
-			.cors()
-			.and()
-			.requestMatchers()
-			.and()
-			.authorizeRequests()
-			.antMatchers("/actuator/**", "/api-docs/**", "/connectedUser", "/hello").permitAll()
-			.antMatchers("/supervision/**").authenticated()
-			.antMatchers("/users-custom/**").authenticated();
-	}
-*/	
 
 }

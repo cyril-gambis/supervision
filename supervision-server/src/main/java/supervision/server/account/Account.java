@@ -4,8 +4,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 import lombok.Data;
+import supervision.server.user.User;
 
 @Entity
 @Data
@@ -20,12 +22,16 @@ public class Account {
 
 	private Role role;
 
+	@OneToOne
+	private User user;
+	
 	protected Account() {}
 	
-	public Account(String username, String password, Role role) {
+	public Account(String username, String password, Role role, User user) {
 		this.username = username;
 		this.password = password;
 		this.role = role;
+		this.user = user;
 	}
 	
 	public String getSpringSecurityRole() {

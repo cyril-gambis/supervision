@@ -1,4 +1,4 @@
-package supervision.server.config;
+package supervision.server.config.security;
 
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -20,8 +20,8 @@ public class CorsConfig {
         config.setAllowCredentials(true);
         //config.addAllowedOrigin("http://localhost:3000");
         config.addAllowedOrigin("*");
-        config.addAllowedHeader("*");
-        config.addAllowedMethod("*");
+        config.addAllowedHeader("*"); // "x-requested-with", "authorization"
+        config.addAllowedMethod("*"); // "POST", "GET", "OPTIONS", "DELETE"
         source.registerCorsConfiguration("/**", config);
         FilterRegistrationBean bean = new FilterRegistrationBean(new CorsFilter(source));
         bean.setOrder(Ordered.HIGHEST_PRECEDENCE);

@@ -1,21 +1,19 @@
-package supervision.server.config;
+package supervision.server.config.security;
 
-import javax.sql.DataSource;
+import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.Resource;
-import org.springframework.jdbc.datasource.init.DataSourceInitializer;
-import org.springframework.jdbc.datasource.init.DatabasePopulator;
-import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.token.TokenEnhancer;
+import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 
@@ -76,6 +74,12 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	private AuthenticationManager authenticationManager;
 	
 	
+	/**
+	 * Configuration used when the resource server must validate the tokens to a authorization server
+	 * 
+	 * @author Cyril Gambis
+	 * @see org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter#configure(org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer)
+	 */
 	@Override
 	public void configure(AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
 		oauthServer
@@ -84,19 +88,20 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	}
 
 
-	@Autowired
-	private DataSource dataSource;
-	
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 		clients
-			.jdbc(dataSource)
+			.inMemory()
+			
 			.withClient(clientId)
 			.authorizedGrantTypes("implicit")
 			.scopes(scopeRead)
 			.autoApprove(true)
+
 			.and()
 			.withClient("clientIdPassword")
+			// No real use for a secret because we cannot guarantee its security (Single Page Application in Javascript)
+			// Nevertheless, we keep it
 			.secret(clientSecret)
 			.authorizedGrantTypes("password", "authorization_code", "refresh_token")
 			.scopes(scopeRead, scopeWrite);
@@ -107,37 +112,22 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 		
 		// The token enhancer will chain multiple types of claims containing different
 		// information
-//		No need to add claims, so enhancer is disabled
-//		TokenEnhancerChain enhancerChain = new TokenEnhancerChain();
-//		enhancerChain.setTokenEnhancers(Arrays.asList(accessTokenConverter));
+		TokenEnhancerChain enhancerChain = new TokenEnhancerChain();
+		enhancerChain.setTokenEnhancers(Arrays.asList(tokenEnhancer(),accessTokenConverter));
 		
 		endpoints
 			.tokenStore(tokenStore)
+			// access token converter has been added to token enhancer,
+			// so no use to set it here
 //			.accessTokenConverter(accessTokenConverter)
-//			No need to add claims, so enhancer is disabled
-//			.tokenEnhancer(enhancerChain)
+			.tokenEnhancer(enhancerChain)
 			
 			// the authenticationManager is used for the "password" grant type
 			.authenticationManager(authenticationManager);
 	}
-
 	
-	
-	@Value("classpath:schema.sql")
-	private Resource schemaScript;
-
 	@Bean
-	public DataSourceInitializer dataSourceInitializer(DataSource dataSource) {
-	    DataSourceInitializer initializer = new DataSourceInitializer();
-	    initializer.setDataSource(dataSource);
-	    initializer.setDatabasePopulator(databasePopulator());
-	    return initializer;
+	public TokenEnhancer tokenEnhancer() {
+		return new CustomTokenEnhancer();
 	}
-	 
-	private DatabasePopulator databasePopulator() {
-	    ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
-	    populator.addScript(schemaScript);
-	    return populator;
-	}
-	
 }
