@@ -1,17 +1,19 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome {{ currentUser?.firstName }}!
-  </h1>
+<mat-toolbar color="primary">
+  <span>Welcome {{ currentUser?.firstName }}!</span>
+
+  <span class="fill-empty-space"></span>
+
+  <a [routerLink]="['/login']">
+    Login
+  </a>
+
+  <mat-divider [vertical]="true" class="menu-divider"></mat-divider>
+
+  <a (click)="logout()" href="javascript:void(0)">
+    Logout
+  </a>  
+</mat-toolbar>
+
+<div class="app-container">
+  <app-user-list></app-user-list>
 </div>
-
-
-<a [routerLink]="['/login']">
-  Login
-</a>
-
-<a (click)="logout()" href="javascript:void(0)">
-  Logout
-</a>
-
-<app-user-list></app-user-list>

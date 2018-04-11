@@ -1,0 +1,13 @@
+.login-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.login-container {
+    width: 300px;
+    border: 1px solid #444444;
+    text-align: center;
+    padding: 0 10px 20px;
+}

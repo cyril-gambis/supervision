@@ -1,0 +1,24 @@
+a {
+    padding: 0 8px;
+    color: white;
+    text-decoration: none;
+}
+
+a:hover {
+    background-color: #C5CAE9;
+}
+
+.menu-divider {
+    height: 60%;
+    border-right-color: white;
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
+.app-container {
+    margin: 8px;
+}
+
+.fill-empty-space {
+    flex: 1 1 auto;
+}

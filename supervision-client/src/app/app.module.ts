@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -17,6 +18,10 @@ import { JwtRequestInterceptor } from './shared/technical/jwt-request.intercepto
 import { TokenService } from './shared/technical/token.service';
 import { AuthGuard } from './shared/guards/auth-guard';
 
+import { MatButtonModule, MatCheckboxModule, MatIconModule, MatFormFieldModule } from '@angular/material';
+import { MatInputModule, MatToolbarModule, MatDividerModule } from '@angular/material';
+import { ErrorRequestInterceptor } from './shared/technical/error-request.interceptor';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,7 +35,11 @@ import { AuthGuard } from './shared/guards/auth-guard';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatButtonModule, MatCheckboxModule, MatIconModule,
+    MatFormFieldModule, MatInputModule, MatToolbarModule,
+    MatDividerModule
   ],
   providers: [
     AuthGuard,
@@ -45,6 +54,11 @@ import { AuthGuard } from './shared/guards/auth-guard';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: JwtRequestInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorRequestInterceptor,
       multi: true
     }
   ],

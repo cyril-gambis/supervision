@@ -5,7 +5,8 @@ import { AuthenticationService } from '../shared/technical/authentication.servic
 import { Logger } from '../shared/technical/logger';
 
 @Component({
-    templateUrl: 'login.component.html'
+    templateUrl: 'login.component.html',
+    styleUrls: ['./login.component.css']
 })
  
 export class LoginComponent implements OnInit {

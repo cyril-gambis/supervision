@@ -1,9 +1,13 @@
 <p>
   Test value: {{ theTestValue?.firstName }} {{ theTestValue?.lastName }}
 </p>
-<button (click)="testValue()" type="submit">TestValue</button>
+<button mat-raised-button (click)="testValue()" type="submit" color="primary">
+  <mat-icon aria-label="login">looks_one</mat-icon> TestValue
+</button>
 
 <p>
   Test value 2 : {{ theTestValue2 }}
 </p>
-<button (click)="testValue2()" type="submit">TestValue2</button>
+<button mat-raised-button (click)="testValue2()" type="submit" color="primary">
+  <mat-icon aria-label="login">looks_two</mat-icon> TestValue2
+</button>
