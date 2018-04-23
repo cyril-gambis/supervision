@@ -1,5 +1,24 @@
-<mat-toolbar color="primary">
+<div class="app-container">
+  
+<mat-toolbar class="toolbar">
+
+  <button mat-button (click)="toggleMenu()" class="menu-button" [class.menu-button-open]="menuOpened">
+    <mat-icon aria-label="menu">menu</mat-icon>
+  </button>
+
   <span>Welcome {{ currentUser?.firstName }}!</span>
+
+  <mat-divider [vertical]="true" class="menu-divider"></mat-divider>
+
+  <a [routerLink]="['/supervision/user-list']">
+    Users
+  </a>
+
+  <mat-divider [vertical]="true" class="menu-divider"></mat-divider>
+
+  <a [routerLink]="['/supervision/usage-log-list']">
+    Usage logs
+  </a>
 
   <span class="fill-empty-space"></span>
 
@@ -14,6 +33,19 @@
   </a>  
 </mat-toolbar>
 
-<div class="app-container">
-  <app-user-list></app-user-list>
+<mat-sidenav-container class="main-container">
+
+<mat-sidenav #sidenav mode="push" [(opened)]="menuOpened" class="sidenav"
+      (closed)="menuClosed()">
+    <app-side-menu></app-side-menu>
+</mat-sidenav>
+
+<mat-sidenav-content class="sidenav-content">
+
+  <router-outlet></router-outlet>
+
+</mat-sidenav-content>
+
+</mat-sidenav-container>
+
 </div>

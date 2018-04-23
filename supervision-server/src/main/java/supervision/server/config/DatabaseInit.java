@@ -3,19 +3,15 @@ package supervision.server.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import supervision.server.account.Account;
-import supervision.server.account.Role;
-import supervision.server.account.repository.AccountRepository;
-import supervision.server.user.User;
-import supervision.server.user.repository.UserRepository;
+import supervision.server.supervisor.Role;
+import supervision.server.supervisor.Supervisor;
+import supervision.server.supervisor.repository.SupervisorRepository;
 
 @Component
 public class DatabaseInit {
 
 	@Autowired
-	UserRepository userRepository;
-	@Autowired
-	AccountRepository accountRepository;
+	SupervisorRepository supervisorRepository;
 	/*
 	@Autowired
 	AnnouncementRepository announcementRepository;
@@ -30,21 +26,13 @@ public class DatabaseInit {
 		System.out.println("Initialization starting");
 		
 		// Create admin user if it doesn't exist
-		Account adminAccount = accountRepository.findByUsername("admin");
+		Supervisor adminAccount = supervisorRepository.findByUsername("admin");
 		if (adminAccount != null) {
 			System.out.println("Administrator account found in database");
 		} else {
 			System.out.println("Administrator account not found in database, it will be created");
-			
-			User adminUser = userRepository.findByFirstName("Admin");
-			if (adminUser == null) {	
-				adminUser = userRepository.save(new User("Admin", ""));
-			}
-			
-			accountRepository.save(new Account("admin", "admin", Role.ADMIN, adminUser));
-		}
-
-		
+			supervisorRepository.save(new Supervisor("admin", "admin", "Admin", "", Role.ADMIN));
+		}		
 				
 	}
 

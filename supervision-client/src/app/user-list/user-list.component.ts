@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../shared/technical/authentication.service';
 import { HttpClient } from '@angular/common/http';
+import { User } from '../shared/models/user';
 
 @Component({
   selector: 'app-user-list',
@@ -9,29 +10,48 @@ import { HttpClient } from '@angular/common/http';
 })
 export class UserListComponent implements OnInit {
 
-  theTestValue = '';
+  userByMail: User = undefined;
 
-  theTestValue2 = '';
+  userById: User = undefined;
+
+  id = 1;
+  mail = 'patricka@test.com';
 
   constructor(private http: HttpClient) { }
 
   ngOnInit() {
   }
 
-  testValue() {
-    this.http.get<string>('/api/user/1')
-      .subscribe(
-        data => this.theTestValue = data,
-        error => this.theTestValue = 'Error'
-      );
-  }
-
-  testValue2() {
+  findByMail() {
+    /*
     this.http.get<string>('/api/currentAccount')
       .subscribe(
         data => this.theTestValue2 = data,
         error => this.theTestValue = 'Error'
-      );
+      );*/
+
+      this.http.get<User>('/api/users/search/findByMail' + '?mail=' + this.mail)
+        .subscribe(
+          data => this.userByMail = data,
+          error => this.userByMail = undefined
+        );
+      
+  }
+
+  findById() {
+    /*
+    this.http.get<string>('/api/currentAccount')
+      .subscribe(
+        data => this.theTestValue2 = data,
+        error => this.theTestValue = 'Error'
+      );*/
+
+      this.http.get<User>('/api/users/' + this.id)
+        .subscribe(
+          data => this.userById = data,
+          error => this.userById = undefined
+        );
+      
   }
 
 }

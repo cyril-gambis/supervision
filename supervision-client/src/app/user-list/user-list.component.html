@@ -1,13 +1,19 @@
-<p>
-  Test value: {{ theTestValue?.firstName }} {{ theTestValue?.lastName }}
-</p>
-<button mat-raised-button (click)="testValue()" type="submit" color="primary">
-  <mat-icon aria-label="login">looks_one</mat-icon> TestValue
+<mat-form-field>
+    <input matInput placeholder="Mail" type="text" [(ngModel)]="mail">
+</mat-form-field>
+<button mat-raised-button (click)="findByMail()" type="submit" color="primary">
+  <mat-icon aria-label="mail">mail</mat-icon> findByMail
 </button>
+<p>
+    Result: {{ userByMail?.firstName }} {{ userByMail?.lastName }}
+</p>
 
-<p>
-  Test value 2 : {{ theTestValue2 }}
-</p>
-<button mat-raised-button (click)="testValue2()" type="submit" color="primary">
-  <mat-icon aria-label="login">looks_two</mat-icon> TestValue2
+<mat-form-field>
+    <input matInput placeholder="Id" type="text" [(ngModel)]="id">
+</mat-form-field>
+<button mat-raised-button (click)="findById()" type="submit" color="primary">
+  <mat-icon aria-label="person">person</mat-icon> findById
 </button>
+<p>
+    Result: {{ userById?.firstName }} {{ userById?.lastName }} (email: {{ userById?.primaryEmail.emailAddress }})
+</p>

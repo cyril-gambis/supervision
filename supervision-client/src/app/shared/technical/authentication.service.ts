@@ -24,6 +24,8 @@ export class AuthenticationService {
 
     AUTH_TOKEN = '/oauth/token';
 
+    CURRENT_SUPERVISOR = '/api/supervisors-custom/currentSupervisor';
+
     httpHeadersJson = new HttpHeaders().set('Content-Type', 'application/json').set('Accept', 'application/json');
 
     constructor(private router: Router, private http: HttpClient, private tokenService: TokenService) {
@@ -57,13 +59,13 @@ export class AuthenticationService {
         ).mergeMap(
             data => {
                 this.tokenService.saveToken(data[this.TOKEN_NAME]);
-                return this.http.get<User>('/api/currentUser');
+                return this.http.get<User>(this.CURRENT_SUPERVISOR);
             }
         );
     }
 
     loginWithToken(token: string): Observable<User> {
-        return this.http.get<User>('/api/currentUser');
+        return this.http.get<User>(this.CURRENT_SUPERVISOR);
     }
 
     logout() {

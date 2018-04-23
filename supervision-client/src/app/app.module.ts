@@ -18,9 +18,13 @@ import { JwtRequestInterceptor } from './shared/technical/jwt-request.intercepto
 import { TokenService } from './shared/technical/token.service';
 import { AuthGuard } from './shared/guards/auth-guard';
 
-import { MatButtonModule, MatCheckboxModule, MatIconModule, MatFormFieldModule } from '@angular/material';
-import { MatInputModule, MatToolbarModule, MatDividerModule } from '@angular/material';
+import { MatButtonModule, MatCheckboxModule, MatIconModule, MatFormFieldModule, MatTableModule } from '@angular/material';
+import { MatInputModule, MatToolbarModule, MatDividerModule, MatSidenavModule } from '@angular/material';
 import { ErrorRequestInterceptor } from './shared/technical/error-request.interceptor';
+import { SideMenuComponent } from './side-menu/side-menu.component';
+import { TopBarComponent } from './top-bar/top-bar.component';
+import { UsageLogListComponent } from './usage-log-list/usage-log-list.component';
+import { UsageLogService } from './shared/services/usage-log.service';
 
 @NgModule({
   declarations: [
@@ -28,7 +32,10 @@ import { ErrorRequestInterceptor } from './shared/technical/error-request.interc
     UserListComponent,
     LoginComponent,
     NotFoundComponent,
-    HomeComponent
+    HomeComponent,
+    SideMenuComponent,
+    TopBarComponent,
+    UsageLogListComponent
   ],
   imports: [
     BrowserModule,
@@ -39,13 +46,17 @@ import { ErrorRequestInterceptor } from './shared/technical/error-request.interc
     BrowserAnimationsModule,
     MatButtonModule, MatCheckboxModule, MatIconModule,
     MatFormFieldModule, MatInputModule, MatToolbarModule,
-    MatDividerModule
+    MatDividerModule, MatSidenavModule,
+    MatTableModule
   ],
   providers: [
     AuthGuard,
     AuthenticationService,
     UserService,
     TokenService,
+
+    UsageLogService,
+
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ApiEndpointInterceptor,

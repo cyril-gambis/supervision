@@ -2,12 +2,12 @@
 
 ## Standard MySQL database
 
-docker run -d --name database-container -e MYSQL_ROOT_PASSWORD=passw -e MYSQL_DATABASE=supervision -p 3306:3306 -v /home/cyril/mysql-data:/var/lib/mysql mysql:latest --sql-mode=""
+docker run -d --name database-container -e MYSQL_ROOT_PASSWORD=passw -e MYSQL_DATABASE=supervision -p 3307:3306 -v /home/cyril/mysql-data:/var/lib/mysql mysql:latest --sql-mode=""
 
 On lance le container en mode daemon avec le paramètre -d
 *	Nom du container: database-container
 *	Paramètres: mot de passe root: passw , nom de la base: supervision
-*	Port: 3306
+*	Port: 3307:3306 veut dire que le port 3307 de la machine hôte correspondra au port 3306 du container (3306 est le port par défaut de MySQL)
 *	Volume monté pour stocker les données de la base: /home/cyril/mysql-data branché sur le répertoire /var/lib/mysql du container
 *	Nom de l'image récupérée à partir de laquelle lancer le container: mysql
 *	Version de l'image: latest

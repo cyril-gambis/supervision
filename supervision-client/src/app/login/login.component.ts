@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit {
                     this.authenticationService.redirectUrl = undefined;
                     this.router.navigate([this.authenticationService.redirectUrl]);
                 } else {
-                    this.router.navigate(['/home']);
+                    this.router.navigate(['/supervision']);
                 }
             });
     }

@@ -1,0 +1,4 @@
+.mat-header-row, .mat-row {
+    min-height: 10px;
+    padding: 6px 24px;
+}

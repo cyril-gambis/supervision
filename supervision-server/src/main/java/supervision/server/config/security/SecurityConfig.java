@@ -16,8 +16,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import supervision.server.account.Account;
-import supervision.server.account.repository.AccountRepository;
+import supervision.server.supervisor.Supervisor;
+import supervision.server.supervisor.repository.SupervisorRepository;
 
 /**
  * Supervision is based on OAuth: an authorization server and a resource server,
@@ -47,7 +47,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	*/
 	
 	@Autowired
-	private AccountRepository accountRepository;
+	private SupervisorRepository supervisorRepository;
 	
 	@Bean
 	@Override
@@ -77,11 +77,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 			@Override
 			public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-				Account account = accountRepository.findByUsername(username);
-				if(account != null) {
-					return new User(account.getUsername(), account.getPassword(), 
+				Supervisor supervisor = supervisorRepository.findByUsername(username);
+				if(supervisor != null) {
+					return new User(supervisor.getUsername(), supervisor.getPassword(), 
 							true, true, true, true,
-							AuthorityUtils.createAuthorityList(account.getSpringSecurityRole()));
+							AuthorityUtils.createAuthorityList(supervisor.getSpringSecurityRole()));
 				} else {
 					throw new UsernameNotFoundException("Could not find the user '" + username + "'");
 				}

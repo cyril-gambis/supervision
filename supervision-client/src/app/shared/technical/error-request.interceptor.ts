@@ -37,3 +37,24 @@ export class ErrorRequestInterceptor implements HttpInterceptor {
     }
 
 }
+
+/*
+
+Another way
+
+intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpSentEvent | HttpHeaderResponse | HttpProgressEvent | HttpResponse<any> | HttpUserEvent<any>> {
+        return next.handle(this.addToken(req, this.authService.getAuthToken()))
+            .catch(error => {
+                if (error instanceof HttpErrorResponse) {
+                    switch ((<HttpErrorResponse>error).status) {
+                        case 400:
+                            return this.handle400Error(error);
+                        case 401:
+                            return this.handle401Error(req, next);
+                    }
+                } else {
+                    return Observable.throw(error);
+                }
+            });
+    }
+*/

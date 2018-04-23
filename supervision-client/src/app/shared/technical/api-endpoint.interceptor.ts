@@ -10,6 +10,7 @@ export class ApiEndpointInterceptor implements HttpInterceptor {
 
     authorizationEndpoint: string;
     resourceEndpoint: string;
+    dataEndpoint: string;
 
     log = new Logger(Logger.DEBUG);
 
@@ -18,6 +19,7 @@ export class ApiEndpointInterceptor implements HttpInterceptor {
 
         this.authorizationEndpoint = environment['authorizationEndpoint'];
         this.resourceEndpoint = environment['resourceEndpoint'];
+        this.dataEndpoint = environment['dataEndpoint'];
 
     }
 
@@ -40,8 +42,13 @@ export class ApiEndpointInterceptor implements HttpInterceptor {
         }
 
         let theUrl = req.url;
+        // If url begins with /api-data, we replace with dataEndpoint
+        if (theUrl.indexOf("/api-data") === 0) {
+            theUrl = theUrl.replace("/api-data", this.dataEndpoint);
+            this.log.l("Url replaced to point to api-data endpoint", theUrl);
+        }
         // If url begins with /api, we replace with resourceEndpoint/authorizationEnpoint
-        if (theUrl.indexOf("/api") === 0) {
+        else if (theUrl.indexOf("/api") === 0) {
             theUrl = theUrl.replace("/api", this.resourceEndpoint);
             this.log.l("Url replaced to point to api endpoint", theUrl);
         }

@@ -6,17 +6,23 @@ import { LoginComponent } from '../login/login.component';
 import { NotFoundComponent } from '../not-found/not-found.component';
 import { HomeComponent } from '../home/home.component';
 import { AuthGuard } from '../shared/guards/auth-guard';
+import { UsageLogListComponent } from '../usage-log-list/usage-log-list.component';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'supervision',
     pathMatch: 'full'
   },
   {
-    path: 'home',
+    path: 'supervision',
     component: HomeComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    children: [
+      { path: '', redirectTo: 'user-list', pathMatch: 'full' },
+      { path: 'user-list', component: UserListComponent },
+      { path: 'usage-log-list', component: UsageLogListComponent }
+    ]
   },
   {
     path: 'login',

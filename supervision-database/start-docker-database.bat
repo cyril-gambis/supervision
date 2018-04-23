@@ -1,1 +1,1 @@
-docker run --rm --name database-container -e MYSQL_ROOT_PASSWORD=passw -e MYSQL_DATABASE=supervision -p 3306:3306 -v e:/tmp/database:/var/lib/mysql mysql:latest --sql-mode=""
+docker run --rm --name database-container -e MYSQL_ROOT_PASSWORD=passw -e MYSQL_DATABASE=supervision -p 3307:3306 -v e:/tmp/database:/var/lib/mysql mysql:latest --sql-mode=""

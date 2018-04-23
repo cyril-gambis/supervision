@@ -1,22 +1,58 @@
+.app-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.toolbar {
+    padding: 0 16px 0 0;
+    z-index: 4;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,.3);
+    flex: 0 0 auto;
+}
+
+.menu-button {
+    height: 100%;
+}
+
+.menu-button-open {
+    background-color: #ccc;
+}
+
 a {
     padding: 0 8px;
-    color: white;
+    color: #444;
     text-decoration: none;
 }
 
 a:hover {
-    background-color: #C5CAE9;
+    color: #888;
 }
 
 .menu-divider {
     height: 60%;
-    border-right-color: white;
+    border-right-color: #888;
     margin-right: 5px;
     margin-left: 5px;
 }
 
-.app-container {
-    margin: 8px;
+.main-container {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidenav {
+    background-color: #fafafa;
+    border-width: 0 1px 0 0;
+    border-color: #888;
+    box-shadow: 6px 0 6px rgba(0,0,0,.1);
+}
+
+.sidenav-content {
+    background-color: white;
+    flex: 1 1 auto;
+    padding: 8px;
 }
 
 .fill-empty-space {

@@ -16,6 +16,6 @@ export class UserService {
  
     getUsers(): Observable<string> { 
         // get users from api
-        return this.http.get<string>('/api/users-custom/all');
+        return this.http.get<string>('/api/users/all');
     }
 }
