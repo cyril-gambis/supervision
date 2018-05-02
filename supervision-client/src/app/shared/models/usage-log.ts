@@ -1,3 +1,5 @@
+import { User } from "./user";
+
 export class UsageLog {
     id: number;
     date: Date;
@@ -10,4 +12,5 @@ export class UsageLog {
     actionType: string;
     actionTypeId: number;
     targetId: number;
+    user: User;
 }

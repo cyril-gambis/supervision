@@ -8,18 +8,6 @@
 
   <span>Welcome {{ currentUser?.firstName }}!</span>
 
-  <mat-divider [vertical]="true" class="menu-divider"></mat-divider>
-
-  <a [routerLink]="['/supervision/user-list']">
-    Users
-  </a>
-
-  <mat-divider [vertical]="true" class="menu-divider"></mat-divider>
-
-  <a [routerLink]="['/supervision/usage-log-list']">
-    Usage logs
-  </a>
-
   <span class="fill-empty-space"></span>
 
   <a [routerLink]="['/login']">
@@ -35,9 +23,9 @@
 
 <mat-sidenav-container class="main-container">
 
-<mat-sidenav #sidenav mode="push" [(opened)]="menuOpened" class="sidenav"
+<mat-sidenav #sidenav mode="side" [(opened)]="menuOpened" class="sidenav"
       (closed)="menuClosed()">
-    <app-side-menu></app-side-menu>
+    <app-side-menu class="sidenav-subcontainer"></app-side-menu>
 </mat-sidenav>
 
 <mat-sidenav-content class="sidenav-content">

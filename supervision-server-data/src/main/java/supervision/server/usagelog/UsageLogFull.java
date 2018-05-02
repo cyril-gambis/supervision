@@ -19,5 +19,5 @@ public class UsageLogFull implements UsageLogFullProjection {
 	private final String firstName;
 	private final String lastName;
 	private final String emailAddress;
-	private final User user;	
+	private final User user;
 }

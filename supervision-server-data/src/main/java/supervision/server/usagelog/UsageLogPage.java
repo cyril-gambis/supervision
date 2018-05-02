@@ -11,11 +11,14 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import lombok.Data;
 
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Data
 @Entity
 @Table(name = "usage_log_page")
@@ -43,7 +46,8 @@ public class UsageLogPage implements Serializable {
     private UserAction userAction;
     
     public String getActionTypeDescription() {
-    	if (userAction != null && userAction.getActionType() != null) {
+    	if (userAction != null && userAction.getActionType() != null
+    			&& userAction.getActionType().getDescription() != null) {
     		return userAction.getActionType().getDescription();
     	} else {
     		return "";
@@ -51,7 +55,8 @@ public class UsageLogPage implements Serializable {
     }
 
     public String getCategoryDescription() {
-    	if (userAction != null && userAction.getActionCategory() != null) {
+    	if (userAction != null && userAction.getActionCategory() != null
+    			&& userAction.getActionCategory().getDescription() != null) {
     		return userAction.getActionCategory().getDescription();
     	} else {
     		return "";
@@ -59,7 +64,8 @@ public class UsageLogPage implements Serializable {
     }
 
     public String getEntityName() {
-    	if (userAction != null && userAction.getActionCategory() != null) {
+    	if (userAction != null && userAction.getActionCategory() != null
+    			&& userAction.getActionCategory().getEntityName() != null) {
     		return userAction.getActionCategory().getEntityName();
     	} else {
     		return "";
@@ -69,8 +75,5 @@ public class UsageLogPage implements Serializable {
     public Long getPageId() {
     	return id;
     }
-    
-    public String entityClassName() {
-        return UsageLogPage.class.getSimpleName();
-    }
+
 }

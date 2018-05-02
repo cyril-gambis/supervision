@@ -10,10 +10,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.NotFound;
 
 import lombok.Data;
 
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Data
 @Entity
 @Table(name = "USAGE_LOG_ACTION")

@@ -3,11 +3,12 @@
     align-items: center;
     justify-content: center;
     height: 100%;
+    background-color: #F0F0F0;
 }
 
 .login-container {
     width: 300px;
-    border: 1px solid #444444;
+    background: white;
     text-align: center;
     padding: 0 10px 20px;
 }

@@ -11,7 +11,7 @@ public class ReportCommand {
 
 	public static final String ID_FIELD_NAME = "id";
 
-	public static final int NB_MAX_RESULTS = 1000;
+	public static final int NB_MAX_RESULTS = 200;
 
 	private ReportEntity reportEntity;
 	

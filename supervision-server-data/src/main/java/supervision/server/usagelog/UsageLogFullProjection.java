@@ -18,13 +18,13 @@ public interface UsageLogFullProjection {
 
     @Value("#{target.usageLogPage.url}")
     String getUrl();
-
+    
     @Value("#{target.usageLogPage.description}")
     String getPage();
 
     @Value("#{target.usageLogPage.categoryDescription}")
     String getCategory();
-    
+
     @Value("#{target.usageLogPage.entityName}")
     String getEntity();
     

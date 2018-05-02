@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -17,6 +18,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.NotFound;
 
 import lombok.Data;
+import supervision.server.license.License;
 import supervision.server.userAccount.UserAccount;
 
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
@@ -58,10 +60,10 @@ public class Customer implements Serializable {
     @NotFound(action = org.hibernate.annotations.NotFoundAction.IGNORE)
     private UserAccount createdBy;
 
-//    @NotNull
-//    @JoinColumn(name = "LICENSE_FK", nullable = false, unique = true)
-//    @OneToOne
-//    private License license;
+    @NotNull
+    @JoinColumn(name = "LICENSE_FK", nullable = false, unique = true)
+    @OneToOne
+    private License license;
 
     // One to many
 //    @JsonBackReference

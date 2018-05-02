@@ -1,4 +1,44 @@
 .menu-container {
-    padding: 8px;
-    width: 200px;
+    background-color: #3D3C3C;
+    flex: 1 0 auto;
+}
+
+.menu-item {
+    display: block;
+    color: #6E6E6E;
+    text-decoration: none;
+    height: auto;
+    text-align: center;
+    padding: 10px;
+    font-size: 13px;
+    font-family: Roboto,"Helvetica Neue",sans-serif;
+    border-width: 0 0 0 2px;
+    border-color: transparent;
+    border-style: solid;
+}
+
+.menu-item:hover {
+    color: #eee;
+    background-color: #565555;
+    border-color: #999;
+    transition: background-color ease .5s, color ease .5s;
+}
+
+.menu-item.active {
+    color: white;
+    background-color: #565555;
+    border-color: #B55D69;
+}
+
+.menu-icon {
+    display: block;
+    height: auto;
+    width: auto;
+    font-size: 34px;
+    padding-bottom: 4px;
+}
+
+.menu-divider {
+    border-color: #5E5E5E;
+
 }

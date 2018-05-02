@@ -3,6 +3,7 @@ package supervision.server.reporting.specification;
 import java.time.LocalDateTime;
 
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
@@ -19,7 +20,7 @@ import supervision.server.reporting.command.SearchCriteria;
 import supervision.server.reporting.command.StringSearchCriteria;
 
 @Data
-public abstract class ReportSpecification<T> implements Specification<T> {
+public class ReportSpecification<T> implements Specification<T> {
 
 	@NonNull
 	protected SearchCriteria criteria;
@@ -100,5 +101,8 @@ public abstract class ReportSpecification<T> implements Specification<T> {
 //		}
 //
 
-	
+	@Override
+	public Predicate toPredicate(Root<T> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
+		return toPredicate(root, builder);
+	}
 }

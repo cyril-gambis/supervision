@@ -18,4 +18,9 @@ export class UserService {
         // get users from api
         return this.http.get<string>('/api/users/all');
     }
+
+    getUsersByCustomerId(customerId: number): Observable<User[]> {
+        return this.http.get<User[]>('/api-data/users/search/findByCustomerId?customerId=' + customerId)
+            .map(res => res['_embedded']['users']);
+    }
 }

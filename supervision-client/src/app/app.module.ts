@@ -18,13 +18,25 @@ import { JwtRequestInterceptor } from './shared/technical/jwt-request.intercepto
 import { TokenService } from './shared/technical/token.service';
 import { AuthGuard } from './shared/guards/auth-guard';
 
-import { MatButtonModule, MatCheckboxModule, MatIconModule, MatFormFieldModule, MatTableModule } from '@angular/material';
-import { MatInputModule, MatToolbarModule, MatDividerModule, MatSidenavModule } from '@angular/material';
+import { MatButtonModule, MatCheckboxModule, MatIconModule, MatFormFieldModule, MatTableModule, MatProgressSpinnerModule, MatPaginatorModule, MatDialogModule, MatSnackBarModule } from '@angular/material';
+import { MatInputModule, MatToolbarModule, MatDividerModule, MatSidenavModule, MatListModule } from '@angular/material';
 import { ErrorRequestInterceptor } from './shared/technical/error-request.interceptor';
 import { SideMenuComponent } from './side-menu/side-menu.component';
 import { TopBarComponent } from './top-bar/top-bar.component';
-import { UsageLogListComponent } from './usage-log-list/usage-log-list.component';
+import { UsageLogListComponent } from './usage-logs/usage-log-list/usage-log-list.component';
 import { UsageLogService } from './shared/services/usage-log.service';
+import { CustomerListComponent } from './customers/customer-list/customer-list.component';
+import { CustomerService } from './shared/services/customer.service';
+import { CustomersComponent } from './customers/customers.component';
+import { CustomerDetailsComponent } from './customers/customer-details/customer-details.component';
+import { HomeDashboardComponent } from './home-dashboard/home-dashboard.component';
+import { FieldComponent } from './customers/customer-details/field.component';
+import { CustomerListData } from './customers/customer-list/customer-list.data';
+import { UsageLogsComponent } from './usage-logs/usage-logs.component';
+import { UsageLogDetailsComponent } from './usage-logs/usage-log-details/usage-log-details.component';
+import { LicenseService } from './shared/services/license.service';
+import { AdminComponent } from './admin/admin.component';
+import { AreYouSureComponent } from './dialog/are-you-sure/are-you-sure.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +47,16 @@ import { UsageLogService } from './shared/services/usage-log.service';
     HomeComponent,
     SideMenuComponent,
     TopBarComponent,
-    UsageLogListComponent
+    UsageLogListComponent,
+    CustomerListComponent,
+    CustomersComponent,
+    CustomerDetailsComponent,
+    HomeDashboardComponent,
+    FieldComponent,
+    UsageLogsComponent,
+    UsageLogDetailsComponent,
+    AdminComponent,
+    AreYouSureComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +68,8 @@ import { UsageLogService } from './shared/services/usage-log.service';
     MatButtonModule, MatCheckboxModule, MatIconModule,
     MatFormFieldModule, MatInputModule, MatToolbarModule,
     MatDividerModule, MatSidenavModule,
-    MatTableModule
+    MatTableModule, MatListModule, MatProgressSpinnerModule,
+    MatPaginatorModule, MatDialogModule, MatSnackBarModule
   ],
   providers: [
     AuthGuard,
@@ -56,6 +78,10 @@ import { UsageLogService } from './shared/services/usage-log.service';
     TokenService,
 
     UsageLogService,
+    CustomerService,
+    LicenseService,
+
+    CustomerListData,
 
     {
       provide: HTTP_INTERCEPTORS,
@@ -73,6 +99,7 @@ import { UsageLogService } from './shared/services/usage-log.service';
       multi: true
     }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents:  [AreYouSureComponent]
 })
 export class AppModule { }

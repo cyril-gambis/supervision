@@ -1,6 +1,27 @@
 <div class="menu-container">
-  <ul>
-    <li>Item1</li>
-    <li>Item 2</li>
-  </ul>
+  <a [routerLink]="['/supervision/home-dashboard']" class="menu-item" routerLinkActive="active">
+    <mat-icon class="menu-icon">home</mat-icon>
+    <div>Home</div>
+  </a>
+  <mat-divider class="menu-divider"></mat-divider>
+  <a [routerLink]="['/supervision/customers']" class="menu-item" routerLinkActive="active">
+    <mat-icon class="menu-icon">web</mat-icon>
+    <div>Customer</div>
+  </a>
+  <mat-divider class="menu-divider"></mat-divider>
+  <a [routerLink]="['/supervision/user-list']" class="menu-item" routerLinkActive="active">
+    <mat-icon class="menu-icon">person</mat-icon>
+    <div>Users</div>
+  </a>
+  <mat-divider class="menu-divider"></mat-divider>
+  <a [routerLink]="['/supervision/usage-logs']" class="menu-item" routerLinkActive="active">
+    <mat-icon class="menu-icon">assessment</mat-icon>
+    <div>Usage logs</div>
+  </a>
+  <mat-divider class="menu-divider"></mat-divider>
+  <a [routerLink]="['/supervision/admin']" class="menu-item" routerLinkActive="active">
+    <mat-icon class="menu-icon">perm_data_setting</mat-icon>
+    <div>Admin</div>
+  </a>
+  <mat-divider class="menu-divider"></mat-divider>
 </div>

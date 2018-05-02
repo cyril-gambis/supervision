@@ -9,7 +9,7 @@ import { User } from '../shared/models/user';
 })
 export class HomeComponent implements OnInit {
 
-  menuOpened = false;
+  menuOpened = true;
 
   constructor(private authenticationService : AuthenticationService) { }
 

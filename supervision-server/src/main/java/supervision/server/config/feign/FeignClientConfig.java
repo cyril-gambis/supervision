@@ -31,14 +31,17 @@ public class FeignClientConfig {
 	}
 
 	/**
-	 * Configure Feign logger 
+	 * Configure Feign logger
+	 * ! Important ! The level of the logger must be ALSO be set as DEBUG in
+	 * application.properties
+	 * For instance: logging.level.supervision.server.usagelog.client=DEBUG
 	 * 
 	 * @date 18/04/2018
 	 * @author Cyril Gambis
 	 */
 	@Bean
 	public Logger.Level feignLogger() {
-		return Logger.Level.BASIC;
+		return Logger.Level.FULL;
 	}
 	
 	/**

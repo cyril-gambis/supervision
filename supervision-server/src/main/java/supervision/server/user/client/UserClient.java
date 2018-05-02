@@ -3,6 +3,7 @@ package supervision.server.user.client;
 import java.util.List;
 
 import org.springframework.cloud.netflix.feign.FeignClient;
+import org.springframework.hateoas.Resources;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,4 +28,8 @@ public interface UserClient {
 
 	@RequestMapping(method = RequestMethod.GET, value = "/users/{id}?projection=usermail", consumes = "application/json")
 	User findByIdWithMail(@PathVariable Long id);
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/users/search/findByCustomerId", consumes = "application/json")
+	Resources<User> findByCustomerId(@RequestParam Long customerId);
+	
 }

@@ -9,6 +9,8 @@
     z-index: 4;
     box-shadow: 0 2px 5px 0 rgba(0,0,0,.3);
     flex: 0 0 auto;
+    background-color: #2975B6;
+    color: white;
 }
 
 .menu-button {
@@ -16,17 +18,17 @@
 }
 
 .menu-button-open {
-    background-color: #ccc;
+    /*background-color: #ccc;*/
 }
 
 a {
     padding: 0 8px;
-    color: #444;
+    color: #eee;
     text-decoration: none;
 }
 
 a:hover {
-    color: #888;
+    color: #fff;
 }
 
 .menu-divider {
@@ -46,11 +48,20 @@ a:hover {
     background-color: #fafafa;
     border-width: 0 1px 0 0;
     border-color: #888;
-    box-shadow: 6px 0 6px rgba(0,0,0,.1);
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    /*box-shadow: 6px 0 6px rgba(0,0,0,.1);*/
+}
+
+.sidenav-subcontainer {
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
 }
 
 .sidenav-content {
-    background-color: white;
+    background-color: #F0F0F0;
     flex: 1 1 auto;
     padding: 8px;
 }
