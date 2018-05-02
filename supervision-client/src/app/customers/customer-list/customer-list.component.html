@@ -1,0 +1,68 @@
+<div class="panel">
+  <div class="panel-title">Customers</div>
+  <div class="panel-content">
+
+    <div class="criterias-container">
+        <mat-form-field>
+            <input matInput placeholder="Search" type="text" [(ngModel)]="searchInput" (keyup.enter)="resetSearch()">
+        </mat-form-field>
+        
+        <button mat-raised-button (click)="resetSearch()" type="submit" color="primary">
+          <mat-icon>search</mat-icon> Search
+        </button>        
+    </div>
+
+      <mat-table [dataSource]="dataSource">
+          <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{ row.id }} </mat-cell>
+          </ng-container>
+        
+          <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+            <mat-cell *matCellDef="let row">
+                <a [routerLink]="['/supervision/customers/customer-details', row.id]" class="link">
+                    {{ row.name }}
+                  </a>
+            </mat-cell>
+          </ng-container>
+        
+          <ng-container matColumnDef="site">
+              <mat-header-cell *matHeaderCellDef> Site </mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{ row.site }} </mat-cell>
+          </ng-container>
+        
+          <ng-container matColumnDef="status">
+              <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+              <mat-cell *matCellDef="let row" [ngClass]="statusClass(row)"> {{ formattedStatus(row) }} </mat-cell>
+          </ng-container>
+        
+          <ng-container matColumnDef="signupDate">
+              <mat-header-cell *matHeaderCellDef> Signup date </mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{ row.signupDate | date: 'dd/MM/y' }} </mat-cell>
+          </ng-container>
+        
+          <ng-container matColumnDef="backOfficeComments">
+              <mat-header-cell *matHeaderCellDef> Backoffice comment </mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{ row.backOfficeComments }} </mat-cell>
+          </ng-container>
+        
+          <ng-container matColumnDef="deleted">
+              <mat-header-cell *matHeaderCellDef> Deleted </mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{ row.deleted }} </mat-cell>
+          </ng-container>
+        
+          <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
+          <mat-row *matRowDef="let myRowData; columns: columnsToDisplay"
+            [ngClass]="customerStyleFromStatus(myRowData)"></mat-row>
+        
+      </mat-table>
+
+      <div class="spinner-container" *ngIf="dataSource.loading$ | async">
+        <mat-spinner [diameter]="50"></mat-spinner>
+      </div>
+
+      <mat-paginator [length]="nbCustomers" [pageSize]="20" [pageSizeOptions]="[3,5,10]"></mat-paginator>
+
+  </div>
+</div>

@@ -1,0 +1,12 @@
+.field {
+    display: flex;
+}
+.field-title {
+    flex: 0 0 auto;
+    text-align: left;
+    min-width: 80px;
+    max-width: 80px;
+}
+.field-value {
+    flex: 1 1 auto;
+}

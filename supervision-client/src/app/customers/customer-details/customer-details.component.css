@@ -1,0 +1,67 @@
+.details-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.main-info {
+    min-width: 30%;
+    max-width: 30%;
+    flex-grow: 0;
+    flex-shrink: 0;
+}
+
+.panel {
+    flex: 1 1 auto;
+}
+
+.main-info-fields {
+    
+}
+
+.customer-name {
+    text-align: center;
+    font-size: 32px;
+    padding: 20px 0;
+}
+
+.users-panel {
+    min-width: 35%;
+    max-width: 35%;
+    flex-grow: 0;
+    flex-shrink: 0;
+}
+
+.users-panel .panel-content {
+    padding-bottom: 10px;
+}
+
+.users-panel .panel-content .users-content {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.never-connected-content {
+    max-height: 200px;
+    overflow-y: auto;
+    padding-top: 15px;
+}
+
+/* Column Widths */
+.mat-column-user,
+.mat-column-date {
+    flex: 1 0 180px;
+}
+
+.logs-button {
+    text-align: center;
+    padding: 20px 10px 5px;
+}
+
+.neverconnected-table {
+    padding-top: 15px;
+}
+
+.canvasActivityAll {
+    height: 400px;
+    width: 400px;
+}

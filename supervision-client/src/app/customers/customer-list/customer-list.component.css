@@ -1,0 +1,41 @@
+/* Column Widths */
+.mat-column-id,
+.mat-column-status,
+.mat-column-deleted {
+    max-width: 124px;
+}
+
+.mat-column-signupDate {
+    max-width: 124px;
+}
+
+.mat-column-name {
+    max-width: 256px;
+}
+
+.panel-content {
+    min-height: 400px;
+}
+
+.row-inactive,
+.row-expired,
+.row-closed {
+    background-color: #eee;
+    color: #aaa;
+}
+
+.mat-cell {
+    color: inherit;
+}
+
+.mat-cell.status-active {
+    color: #20BD7E;
+}
+
+.mat-cell.status-inactive {
+    color: #FFCB2B;
+}
+
+.mat-cell.status-closed {
+    color: #FF6A2B;
+}
