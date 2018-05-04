@@ -9,9 +9,9 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "dev": "ng serve --env=dev --host=0.0.0.0",
-    "qa": "ng serve --env=qa --host=0.0.0.0",
-    "prod": "ng serve --env=prod --host=0.0.0.0"
+    "dev": "ng serve --env=dev --host=0.0.0.0 --port 4401",
+    "qa": "ng serve --env=qa --host=0.0.0.0 --port 4401",
+    "prod": "ng serve --env=prod --host=0.0.0.0 --port 4401"
   },
   "private": true,
   "dependencies": {
