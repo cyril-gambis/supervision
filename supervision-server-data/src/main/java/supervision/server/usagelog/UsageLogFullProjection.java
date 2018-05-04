@@ -21,7 +21,7 @@ public interface UsageLogFullProjection {
     
     @Value("#{target.usageLogPage.description}")
     String getPage();
-
+/*
     @Value("#{target.categoryDescription}")
     String getCategory();
 
@@ -30,7 +30,7 @@ public interface UsageLogFullProjection {
     
     @Value("#{target.actionTypeDescription}")
     String getActionType();
-
+*/
     @Value("#{target.usageLogPage.id}")
     Long getPageId();
 
