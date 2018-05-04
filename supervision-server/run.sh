@@ -1,1 +1,1 @@
-mvn3 spring-boot:run -Dspring.profiles.active=staging
+mvn3 spring-boot:run -Drun.jvmArguments="-Dspring.profiles.active=staging"
