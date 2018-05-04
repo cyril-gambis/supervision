@@ -13,7 +13,6 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.NotFound;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import lombok.Data;
@@ -42,40 +41,7 @@ public class UsageLogPage implements Serializable {
 
     @JoinColumn(name = "USAGE_LOG_ACTION_FK")
     @ManyToOne
-    @NotFound(action = org.hibernate.annotations.NotFoundAction.IGNORE)
     private UserAction userAction;
-    
-    public String getActionTypeDescription() {
-    	if (userAction != null && userAction.getActionType() != null
-    			&& userAction.getActionType().getDescription() != null) {
-    		return userAction.getActionType().getDescription();
-    	} else {
-    		return "";
-    	}
-    }
-
-    public String getCategoryDescription() {
-    	System.out.println("CATEGORY DESCRIPTION");
-    	System.out.println("userAction: ");
-    	System.out.println(userAction);
-    	System.out.println("userAction.getActionCategory");
-    	System.out.println(userAction.getActionCategory());
-    	if (userAction != null && userAction.getActionCategory() != null
-    			&& userAction.getActionCategory().getDescription() != null) {
-    		return userAction.getActionCategory().getDescription();
-    	} else {
-    		return "";
-    	}
-    }
-
-    public String getEntityName() {
-    	if (userAction != null && userAction.getActionCategory() != null
-    			&& userAction.getActionCategory().getEntityName() != null) {
-    		return userAction.getActionCategory().getEntityName();
-    	} else {
-    		return "";
-    	}
-    }
 
     public Long getPageId() {
     	return id;

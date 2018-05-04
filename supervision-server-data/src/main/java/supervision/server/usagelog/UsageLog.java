@@ -50,4 +50,35 @@ public class UsageLog implements Serializable {
     private User user;
 
 
+    public String getActionTypeDescription() {
+    	if (usageLogPage != null && usageLogPage.getUserAction() != null && usageLogPage.getUserAction().getActionType() != null
+    			&& usageLogPage.getUserAction().getActionType().getDescription() != null) {
+    		return usageLogPage.getUserAction().getActionType().getDescription();
+    	} else {
+    		return "";
+    	}
+    }
+
+    public String getCategoryDescription() {
+    	System.out.println("CATEGORY DESCRIPTION");
+    	System.out.println("usageLogPage.getUserAction(): ");
+    	System.out.println(usageLogPage.getUserAction());
+    	System.out.println("usageLogPage.getUserAction().getActionCategory");
+    	System.out.println(usageLogPage.getUserAction().getActionCategory());
+    	if (usageLogPage != null && usageLogPage.getUserAction() != null && usageLogPage.getUserAction().getActionCategory() != null
+    			&& usageLogPage.getUserAction().getActionCategory().getDescription() != null) {
+    		return usageLogPage.getUserAction().getActionCategory().getDescription();
+    	} else {
+    		return "";
+    	}
+    }
+
+    public String getEntityName() {
+    	if (usageLogPage != null && usageLogPage.getUserAction() != null && usageLogPage.getUserAction().getActionCategory() != null
+    			&& usageLogPage.getUserAction().getActionCategory().getEntityName() != null) {
+    		return usageLogPage.getUserAction().getActionCategory().getEntityName();
+    	} else {
+    		return "";
+    	}
+    }
 }

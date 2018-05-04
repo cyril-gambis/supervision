@@ -22,13 +22,13 @@ public interface UsageLogFullProjection {
     @Value("#{target.usageLogPage.description}")
     String getPage();
 
-    @Value("#{target.usageLogPage.categoryDescription}")
+    @Value("#{target.categoryDescription}")
     String getCategory();
 
-    @Value("#{target.usageLogPage.entityName}")
+    @Value("#{target.entityName}")
     String getEntity();
     
-    @Value("#{target.usageLogPage.actionTypeDescription}")
+    @Value("#{target.actionTypeDescription}")
     String getActionType();
 
     @Value("#{target.usageLogPage.id}")
