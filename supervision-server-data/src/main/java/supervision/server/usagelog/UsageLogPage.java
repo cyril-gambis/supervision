@@ -55,6 +55,11 @@ public class UsageLogPage implements Serializable {
     }
 
     public String getCategoryDescription() {
+    	System.out.println("CATEGORY DESCRIPTION");
+    	System.out.println("userAction: ");
+    	System.out.println(userAction);
+    	System.out.println("userAction.getActionCategory");
+    	System.out.println(userAction.getActionCategory());
     	if (userAction != null && userAction.getActionCategory() != null
     			&& userAction.getActionCategory().getDescription() != null) {
     		return userAction.getActionCategory().getDescription();

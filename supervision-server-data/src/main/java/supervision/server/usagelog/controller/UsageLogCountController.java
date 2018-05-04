@@ -9,8 +9,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import supervision.server.usagelog.UsageLogCountByUser;
-import supervision.server.usagelog.UsageLogCountByUserByMonth;
+import supervision.server.usagelog.CountByDay;
+import supervision.server.usagelog.CountByUser;
+import supervision.server.usagelog.CountByUserByMonth;
 import supervision.server.usagelog.repository.UsageLogRepository;
 
 /**
@@ -29,15 +30,22 @@ public class UsageLogCountController {
 	@ResponseBody
 	@GetMapping(value = "/usageLogs/search/countByCustomerIdAndUsageLogPageId",
 			produces = { MediaType.APPLICATION_JSON_VALUE })
-	public List<UsageLogCountByUser> count(@RequestParam Long customerId, @RequestParam Long usageLogPageId) {
+	public List<CountByUser> count(@RequestParam Long customerId, @RequestParam Long usageLogPageId) {
 		return usageLogRepository.countByCustomerIdAndUsageLogPageId(customerId, usageLogPageId);
 	}
 
 	@ResponseBody
 	@GetMapping(value = "/usageLogs/search/countByCustomerIdAndUsageLogPageIdGroupByMonth",
 			produces = { MediaType.APPLICATION_JSON_VALUE })
-	public List<UsageLogCountByUserByMonth> countByMonth(@RequestParam Long customerId, @RequestParam Long usageLogPageId) {
+	public List<CountByUserByMonth> countByMonth(@RequestParam Long customerId, @RequestParam Long usageLogPageId) {
 		return usageLogRepository.countByCustomerIdAndUsageLogPageIdGroupByMonth(customerId, usageLogPageId);
 	}
 
+	@ResponseBody
+	@GetMapping(value = "/usageLogs/search/countByCustomerIdAndUsageLogPageIdGroupByDay",
+			produces = { MediaType.APPLICATION_JSON_VALUE })
+	public List<CountByDay> countByDay(@RequestParam Long customerId, @RequestParam Long usageLogPageId) {
+		return usageLogRepository.countByCustomerIdAndUsageLogPageIdGroupByDay(customerId, usageLogPageId);
+	}
+	
 }

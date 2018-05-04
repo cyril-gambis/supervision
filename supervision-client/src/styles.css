@@ -112,3 +112,9 @@ a:hover,
     font-size: larger;
     font-weight: bold;
 }
+
+.centered-button {
+    text-align: center !important;
+    margin: 20px auto 5px !important;
+    display: block !important;
+}

@@ -16,14 +16,12 @@
               <app-field [title]="'Back office comments'" [value]="customer.backOfficeComments" *ngIf="customer.backOfficeComments"></app-field>
       
             </div>
-            <div class="logs-button">
-      
-                <button mat-raised-button [routerLink]="['/supervision/usage-logs/overview/', customer.id]" type="submit" color="primary">
-                    <mat-icon class="menu-icon">assessment</mat-icon> Overview logs
-                </button>
-                  
-            </div>
+
+            <button mat-raised-button [routerLink]="['/supervision/usage-logs/overview/', customer.id]" type="submit" color="primary" class="centered-button">
+                <mat-icon class="menu-icon">assessment</mat-icon> Overview logs
+            </button>
           </div>
+
         </div>
 
         <div class="panel">
@@ -50,125 +48,11 @@
 
   
   <div class="panel users-panel">
-    <div class="panel-title-2 panel-title-button">
-      <div>Users ({{ userAccesses.length + neverConnectedUsers.length }})</div>
-      <div>
-        <button mat-icon-button (click)="refreshLastAccesses()">
-          <mat-icon>refresh</mat-icon>
-        </button>
-      </div>
-    </div>
-    <div class="panel-content">
-
-      <div class="users-content">
-
-        <mat-table [dataSource]="userAccesses">
-          <ng-container matColumnDef="user">
-            <mat-header-cell *matHeaderCellDef> User </mat-header-cell>
-            <mat-cell *matCellDef="let row">{{ formatUser(row) }}</mat-cell>
-          </ng-container>
-        
-          <ng-container matColumnDef="date">
-            <mat-header-cell *matHeaderCellDef> Date </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{ row.lastAccessDate | date: 'dd/MM/y - HH:mm:ss' }} </mat-cell>
-          </ng-container>
-        
-          <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
-          <mat-row *matRowDef="let myRowData; columns: columnsToDisplay"></mat-row>
-        
-        </mat-table>
-
-        <div class="spinner-container" *ngIf="loading">
-            <mat-spinner [diameter]="50"></mat-spinner>
-        </div>
-      </div>
-
-      <div class="never-connected-content">
-        <mat-table [dataSource]="neverConnectedUsers" class="neverconnected-table">
-          <ng-container matColumnDef="user">
-            <mat-header-cell *matHeaderCellDef> Never connected </mat-header-cell>
-            <mat-cell *matCellDef="let row">{{ formatUser(row) }}</mat-cell>
-          </ng-container>
-        
-          <mat-header-row *matHeaderRowDef="columnsToDisplay2"></mat-header-row>
-          <mat-row *matRowDef="let myRowData; columns: columnsToDisplay2"></mat-row>
-        
-        </mat-table>
-      </div>
-
-      <div style="text-align: right; padding: 15px 0 0; font-size: smaller; font-style: italic;">
-        Last refresh:
-        <span *ngIf="lastRefreshDate">{{ lastRefreshDate | date: 'dd/MM/y - HH:mm:ss' }}</span>
-        <span *ngIf="!lastRefreshDate">&lt;undefined&gt;</span>
-      </div>
-
-    </div>
+    <app-customer-last-access></app-customer-last-access>
   </div>
 
   <div class="main-info">
-
-    <div class="panel">
-      <div class="panel-title-4 panel-title-button">
-        <div>Activity</div>
-        <div>
-          <button mat-icon-button (click)="refreshAllAccesses()">
-            <mat-icon>refresh</mat-icon>
-          </button>
-        </div>
-      </div>
-      <div class="panel-content">
-
-        <div style="text-align: right; padding: 15px 0 0; font-size: smaller; font-style: italic;">
-          Last refresh:
-          <span *ngIf="lastRefreshAllDate">{{ lastRefreshAllDate | date: 'dd/MM/y - HH:mm:ss' }}</span>
-          <span *ngIf="!lastRefreshAllDate">&lt;undefined&gt;</span>
-        </div>
-
-  <!--
-        <div *ngFor="let count of countByMonth">
-          {{ count.month }} / {{ count.year }}: {{ count.count }}
-        </div>
-  -->
-        <div>
-          <canvas id="canvas">{{ chart }}</canvas>
-        </div>
-
-      </div>
-    </div>
-
-    <div class="panel">
-      <div class="panel-title-5 panel-title-button">
-        <div>Activity All</div>
-        <div>
-          <button mat-icon-button (click)="displayActivityAllChart()">
-            <mat-icon>refresh</mat-icon>
-          </button>
-        </div>
-      </div>
-      <div class="panel-content">
-
-          <div *ngIf="undefined">
-            Overview: {{ nbOverview }}<br/>
-            Projects: {{ nbProjects }}<br/>
-            Tasks: {{ nbTasks }}<br/>
-            Workload: {{ nbWorkloads }}<br/>
-            Schedule: {{ nbSchedule }}<br/>
-            Timesheet: {{ nbTimesheet }}<br/>
-          </div>
-
-          <div class="chart-container" style="position: relative; height: 400px; width: auto">
-            <canvas id="canvasActivityAll">{{ chartActivityAll }}</canvas>
-          </div>
-
-          <div style="text-align: center;">
-            <button mat-raised-button (click)="refreshAllAccessesAllPages()" color="warn">
-              <mat-icon class="menu-icon">refresh</mat-icon> Refresh all
-            </button>
-          </div>
-
-      </div>
-    </div>
-
+    <app-customer-activity></app-customer-activity>
   </div>
 
 </div>

@@ -7,9 +7,10 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
+import supervision.server.usagelog.CountByDay;
+import supervision.server.usagelog.CountByUser;
+import supervision.server.usagelog.CountByUserByMonth;
 import supervision.server.usagelog.UsageLog;
-import supervision.server.usagelog.UsageLogCountByUser;
-import supervision.server.usagelog.UsageLogCountByUserByMonth;
 
 @RepositoryRestResource(collectionResourceRel = "usageLogs", path = "usageLogs")
 public interface UsageLogRepository extends JpaRepository<UsageLog, Long>, JpaSpecificationExecutor<UsageLog>, UsageLogRepositoryCustom {
@@ -32,19 +33,27 @@ public interface UsageLogRepository extends JpaRepository<UsageLog, Long>, JpaSp
 			+ "ORDER BY ul.date DESC")
 	List<UsageLog> findLastLogByCustomerIdAndUsageLogPageId(Long customerId, Long usageLogPageId);
 		
-	@Query("SELECT new supervision.server.usagelog.UsageLogCountByUser(ul.user, count(ul)) "
+	@Query("SELECT new supervision.server.usagelog.CountByUser(ul.user, count(ul)) "
 			+ "FROM UsageLog ul, UserAccount ua "
 			+ "WHERE ua.customer.id = :customerId "
 				+ "AND ua.user = ul.user AND ul.usageLogPage.id = :usageLogPageId "
 			+ "GROUP BY ul.user")
-	List<UsageLogCountByUser> countByCustomerIdAndUsageLogPageId(Long customerId, Long usageLogPageId);
+	List<CountByUser> countByCustomerIdAndUsageLogPageId(Long customerId, Long usageLogPageId);
 
-	@Query("SELECT new supervision.server.usagelog.UsageLogCountByUserByMonth(ul.user, count(ul), month(ul.date), year(ul.date)) "
+	@Query("SELECT new supervision.server.usagelog.CountByUserByMonth(ul.user, count(ul), month(ul.date), year(ul.date)) "
 			+ "FROM UsageLog ul, UserAccount ua "
 			+ "WHERE ua.customer.id = :customerId "
 				+ "AND ua.user = ul.user AND ul.usageLogPage.id = :usageLogPageId "
 			+ "GROUP BY year(ul.date), month(ul.date), ul.user")
-	List<UsageLogCountByUserByMonth> countByCustomerIdAndUsageLogPageIdGroupByMonth(Long customerId, Long usageLogPageId);
+	List<CountByUserByMonth> countByCustomerIdAndUsageLogPageIdGroupByMonth(Long customerId, Long usageLogPageId);
+
+	@Query("SELECT new supervision.server.usagelog.CountByDay(day(ul.date), month(ul.date), year(ul.date), count(ul)) "
+			+ "FROM UsageLog ul, UserAccount ua "
+			+ "WHERE ua.customer.id = :customerId "
+				+ "AND ua.user = ul.user AND ul.usageLogPage.id = :usageLogPageId "
+			+ "GROUP BY year(ul.date), month(ul.date), day(ul.date)")
+	List<CountByDay> countByCustomerIdAndUsageLogPageIdGroupByDay(Long customerId, Long usageLogPageId);
+	
 	
 /*
 

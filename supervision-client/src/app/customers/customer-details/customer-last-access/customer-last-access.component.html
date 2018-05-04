@@ -1,0 +1,64 @@
+<div class="panel-title-2 panel-title-button">
+  <div>Users {{ numberOfUsers() }}</div>
+  <div>
+    <button mat-icon-button (click)="refreshLastAccesses()">
+      <mat-icon>refresh</mat-icon>
+    </button>
+  </div>
+</div>
+<div class="panel-content" *ngIf="lastAccessesInitialized; else notinitialized">
+
+  <div class="users-content">
+
+    <mat-table [dataSource]="userAccesses">
+      <ng-container matColumnDef="user">
+        <mat-header-cell *matHeaderCellDef> User </mat-header-cell>
+        <mat-cell *matCellDef="let row">{{ formatUser(row) }}</mat-cell>
+      </ng-container>
+    
+      <ng-container matColumnDef="date">
+        <mat-header-cell *matHeaderCellDef> Date </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{ row.lastAccessDate | date: 'dd/MM/y - HH:mm:ss' }} </mat-cell>
+      </ng-container>
+    
+      <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
+      <mat-row *matRowDef="let myRowData; columns: columnsToDisplay"></mat-row>
+    
+    </mat-table>
+
+    <div class="spinner-container" *ngIf="loading">
+        <mat-spinner [diameter]="50"></mat-spinner>
+    </div>
+  </div>
+
+  <div class="never-connected-content">
+    <mat-table [dataSource]="neverConnectedUsers" class="neverconnected-table">
+      <ng-container matColumnDef="user">
+        <mat-header-cell *matHeaderCellDef> Never connected </mat-header-cell>
+        <mat-cell *matCellDef="let row">{{ formatUser(row) }}</mat-cell>
+      </ng-container>
+    
+      <mat-header-row *matHeaderRowDef="columnsToDisplayNeverConnected"></mat-header-row>
+      <mat-row *matRowDef="let myRowData; columns: columnsToDisplayNeverConnected"></mat-row>
+    
+    </mat-table>
+  </div>
+
+  <div style="text-align: right; padding: 15px 0 0; font-size: smaller; font-style: italic;">
+    Last refresh:
+    <span *ngIf="lastRefreshDate">{{ lastRefreshDate | date: 'dd/MM/y - HH:mm:ss' }}</span>
+    <span *ngIf="!lastRefreshDate">&lt;undefined&gt;</span>
+    {{ test }}
+  </div>
+
+</div>
+
+<ng-template #notinitialized>
+  <div class="panel-content" style="text-align: center" *ngIf="lastAccessesReady">
+    Last accesses have never been computed for this client.
+    <br/>
+    <button mat-raised-button color="primary" (click)="refreshLastAccesses()" class="centered-button">
+      <mat-icon class="menu-icon">update</mat-icon> Compute last accesses
+    </button>
+  </div>
+</ng-template>

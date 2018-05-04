@@ -4,12 +4,14 @@ import java.util.List;
 
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.hateoas.Resources;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import supervision.server.usagelog.UsageLogCountByUser;
-import supervision.server.usagelog.UsageLogCountByUserByMonth;
+import supervision.server.usagelog.CountByDay;
+import supervision.server.usagelog.CountByUser;
+import supervision.server.usagelog.CountByUserByMonth;
 import supervision.server.usagelog.UsageLogFull;
 
 @FeignClient("SUPERVISION-DATA/api/v1.0")
@@ -28,13 +30,17 @@ public interface UsageLogClient {
 	@RequestMapping(method = RequestMethod.GET,
 			value = "/usageLogs/search/countByCustomerIdAndUsageLogPageId",
 			consumes = "application/json")
-	List<UsageLogCountByUser> countByCustomerIdAndUsageLogPageId(@RequestParam Long customerId, @RequestParam Long usageLogPageId);
+	List<CountByUser> countByCustomerIdAndUsageLogPageId(@RequestParam Long customerId, @RequestParam Long usageLogPageId);
 
 	@RequestMapping(method = RequestMethod.GET,
 			value = "/usageLogs/search/countByCustomerIdAndUsageLogPageIdGroupByMonth",
 			consumes = "application/json")
-	List<UsageLogCountByUserByMonth> countByCustomerIdAndUsageLogPageIdGroupByMonth(@RequestParam Long customerId, @RequestParam Long usageLogPageId);
+	List<CountByUserByMonth> countByCustomerIdAndUsageLogPageIdGroupByMonth(@RequestParam Long customerId, @RequestParam Long usageLogPageId);
 
+	@GetMapping(value = "/usageLogs/search/countByCustomerIdAndUsageLogPageIdGroupByDay",
+			consumes = "application/json")
+	List<CountByDay> countByCustomerIdAndUsageLogPageIdGroupByDay(@RequestParam Long cutomerId, @RequestParam Long usageLogPageId);
+	
 /*	
 	@RequestMapping(method = RequestMethod.GET, value = "/users/search/findByPrimaryEmailAddress", consumes = "application/json")
 	User findByPrimaryEmailAddress(@RequestParam String emailAddress);

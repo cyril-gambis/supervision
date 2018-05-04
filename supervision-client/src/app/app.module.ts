@@ -37,6 +37,8 @@ import { UsageLogDetailsComponent } from './usage-logs/usage-log-details/usage-l
 import { LicenseService } from './shared/services/license.service';
 import { AdminComponent } from './admin/admin.component';
 import { AreYouSureComponent } from './dialog/are-you-sure/are-you-sure.component';
+import { CustomerActivityComponent } from './customers/customer-details/customer-activity/customer-activity.component';
+import { CustomerLastAccessComponent } from './customers/customer-details/customer-last-access/customer-last-access.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +58,9 @@ import { AreYouSureComponent } from './dialog/are-you-sure/are-you-sure.componen
     UsageLogsComponent,
     UsageLogDetailsComponent,
     AdminComponent,
-    AreYouSureComponent
+    AreYouSureComponent,
+    CustomerActivityComponent,
+    CustomerLastAccessComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,43 @@
+<div class="panel" *ngIf="lastRefreshAllDate">
+  <div class="panel-title-4">
+    <div>Activity</div>
+  </div>
+  <div class="panel-content">
+
+    <div>
+      <canvas id="canvas">{{ chart }}</canvas>
+    </div>
+
+  </div>
+</div>
+
+<div class="panel" *ngIf="lastRefreshAllDate">
+  <div class="panel-title-5">
+    <div>Activity All</div>
+  </div>
+  <div class="panel-content">
+
+      <div class="chart-container" style="position: relative; height: 400px; width: auto">
+        <canvas id="canvasActivityAll">{{ chartActivityAll }}</canvas>
+      </div>
+
+  </div>
+</div>
+
+<div class="panel">
+  <div class="panel-title-3">
+    <div>Compute data</div>
+  </div>
+  <div class="panel-content">
+
+    <div style="text-align: center">
+      <span *ngIf="lastRefreshAllDate">Last refresh: {{ lastRefreshAllDate | date: 'dd/MM/y - HH:mm:ss' }}</span>
+      <span *ngIf="!lastRefreshAllDate">The activity has never been computed for this client.</span>
+    </div>
+
+    <button mat-raised-button (click)="refreshAllAccessesAllPages()" color="warn" class="centered-button">
+      <mat-icon class="menu-icon">refresh</mat-icon> Refresh all
+    </button>
+  </div>
+</div>
+  

@@ -14,14 +14,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import supervision.server.usagelog.CountByDay;
+import supervision.server.usagelog.CountByMonth;
+import supervision.server.usagelog.CountByUserByMonth;
 import supervision.server.usagelog.LastAccess;
+import supervision.server.usagelog.NbHitsPerDay;
 import supervision.server.usagelog.NbHitsPerMonth;
-import supervision.server.usagelog.UsageLogCountByMonth;
-import supervision.server.usagelog.UsageLogCountByUser;
-import supervision.server.usagelog.UsageLogCountByUserByMonth;
 import supervision.server.usagelog.UsageLogFull;
 import supervision.server.usagelog.client.UsageLogClient;
 import supervision.server.usagelog.repository.LastAccessRepository;
+import supervision.server.usagelog.repository.NbHitsPerDayRepository;
 import supervision.server.usagelog.repository.NbHitsPerMonthRepository;
 import supervision.server.user.client.UserClient;
 
@@ -41,7 +43,10 @@ public class UsageLogOptController {
 	
 	@Autowired
 	private NbHitsPerMonthRepository nbHitsPerMonthRepository;
-	
+
+	@Autowired
+	private NbHitsPerDayRepository nbHitsPerDayRepository;
+
 	@Autowired
 	private UserClient userClient;
 	
@@ -148,31 +153,15 @@ public class UsageLogOptController {
 
 		return ResponseEntity.ok("Compute completed on " + logs.getContent().size() + " users.");
 	}
-	
-	@GetMapping(value="/computeAllAccesses2")
-	@ResponseBody
-	public ResponseEntity<String> computeAllAccesses(@RequestParam Long customerId) {
-		
-		List<UsageLogCountByUser> countByUser = usageLogClient.countByCustomerIdAndUsageLogPageId(customerId, OVERVIEW_PAGE_ID);
-		
-		StringBuffer buff = new StringBuffer();
-		for (UsageLogCountByUser count : countByUser) {
-			
-			buff.append(count.getUser().getFirstName() + " " + count.getUser().getLastName() + ": " + count.getCount());
-		}
 
-		return ResponseEntity.ok("Compute completed on " + countByUser.size() + " users.\n"
-				+ buff.toString());
-	}
-	
 	@GetMapping(value="/computeAllAccesses")
 	@ResponseBody
 	public ResponseEntity<String> computeAllAccessesByMonth(@RequestParam Long customerId) {
 		
-		List<UsageLogCountByUserByMonth> countByUser =
+		List<CountByUserByMonth> countByUser =
 				usageLogClient.countByCustomerIdAndUsageLogPageIdGroupByMonth(customerId, OVERVIEW_PAGE_ID);
 		
-		for (UsageLogCountByUserByMonth count : countByUser) {
+		for (CountByUserByMonth count : countByUser) {
 			
 			// Delete previous entry
 			nbHitsPerMonthRepository.deleteByUserIdAndMonthAndYearAndPageId(count.getUser().getId(), count.getMonth(), count.getYear(), OVERVIEW_PAGE_ID);
@@ -184,12 +173,6 @@ public class UsageLogOptController {
 
 		return ResponseEntity.ok("Compute completed on " + countByUser.size() + " lines.");
 	}
-	
-	
-	
-	
-	
-	
 	
 	@GetMapping(value="/computeAllAccessesAllPages")
 	@ResponseBody
@@ -204,10 +187,10 @@ public class UsageLogOptController {
 		int nbLinesComputed = 0;
 		
 		for (Long id : pageIds) {
-			List<UsageLogCountByUserByMonth> countByUser =
+			List<CountByUserByMonth> countByUser =
 					usageLogClient.countByCustomerIdAndUsageLogPageIdGroupByMonth(customerId, id);
 			
-			for (UsageLogCountByUserByMonth count : countByUser) {
+			for (CountByUserByMonth count : countByUser) {
 				
 				// Delete previous entry
 				nbHitsPerMonthRepository.deleteByUserIdAndMonthAndYearAndPageId(count.getUser().getId(), count.getMonth(), count.getYear(), id);
@@ -225,15 +208,66 @@ public class UsageLogOptController {
 	
 	@GetMapping(value="/getCountByMonth")
 	@ResponseBody
-	public List<UsageLogCountByMonth> getCountByMonth(@RequestParam Long customerId) {
-		List<UsageLogCountByMonth> hits = countByCustomerIdGroupByMonthAndYear(customerId);
+	public List<CountByMonth> getCountByMonth(@RequestParam Long customerId) {
+		List<CountByMonth> hits = countByCustomerIdGroupByMonthAndYear(customerId);
 		return hits;
 	}
 	
 	@GetMapping(value="nbHitsPerMonths/search/countByCustomerIdGroupByMonthAndYear",
 			produces = { MediaType.APPLICATION_JSON_VALUE })
-	public List<UsageLogCountByMonth> countByCustomerIdGroupByMonthAndYear(@RequestParam Long customerId) {
+	public List<CountByMonth> countByCustomerIdGroupByMonthAndYear(@RequestParam Long customerId) {
 		return nbHitsPerMonthRepository.countByCustomerIdGroupByMonthAndYear(customerId);
+	}
+	
+	
+	/**
+	 * Compute the number of hits by page and by day
+	 * Don't take into account the user
+	 * 
+	 * @date 03/05/2018
+	 * @author Cyril Gambis
+	 * @param customerId
+	 * @return
+	 */
+	@GetMapping(value="/computeOverviewAccessesByDay")
+	@ResponseBody
+	public ResponseEntity<String> computeOverviewAccessesByDay(@RequestParam Long customerId) {
+	/*	
+		List<Long> pageIds = Arrays.asList(OVERVIEW_PAGE_ID, PROJECTS_PAGE_ID, PZ_TASKS_PAGE_ID, PZ_WORKLOAD_PAGE_ID,
+				PZ_SCHEDULE_PAGE_ID, PZ_TIMESHEET_PAGE_ID, PZ_DISCUSSION_ID,
+				PR_OVERVIEW_PAGE_ID, PR_TASKS_PAGE_ID, PR_WORKLOAD_PAGE_ID, PR_SCHEDULE_PAGE_ID, PR_TIMESHEET_PAGE_ID,
+				PR_DISCUSSION_ID, CALENDAR_PAGE_ID, REPORTS_ID, TEMPLATES_ID, EXPORTS_ID, MESSAGE_ON_TASK_ID,
+				MESSAGE_ON_MILESTONE_ID, MESSAGE_ON_EVENT_ID, MESSAGE_POPUP_ID);
+*/
+		List<Long> pageIds = Arrays.asList(OVERVIEW_PAGE_ID);
+		
+		int nbLinesComputed = 0;
+		
+		for (Long id : pageIds) {
+			List<CountByDay> countByDay =
+					usageLogClient.countByCustomerIdAndUsageLogPageIdGroupByDay(customerId, id);
+			
+			for (CountByDay count : countByDay) {
+				
+				// Delete previous entry
+				nbHitsPerDayRepository.deleteByDayAndMonthAndYearAndCustomerIdAndPageId(count.getDay(), count.getMonth(), count.getYear(), customerId, id);
+				
+				nbHitsPerDayRepository.save(new NbHitsPerDay(customerId, count.getDay(), count.getMonth(), count.getYear(), count.getCount(),
+						id, LocalDateTime.now()));
+				
+			}
+			nbLinesComputed += countByDay.size();
+		}
+		return ResponseEntity.ok("Compute completed on " + nbLinesComputed + " lines.");
+	}
+
+	@GetMapping("/lastComputationAllAccessesAllPage")
+	public ResponseEntity<LocalDateTime> lastComputationAllAccessesAllPage(@RequestParam Long customerId) {
+		NbHitsPerMonth nbHits = nbHitsPerMonthRepository.findTopByCustomerIdOrderByCalculationDateDesc(customerId);
+		if (nbHits != null) {
+			return ResponseEntity.ok(nbHits.getCalculationDate());
+		}
+		return ResponseEntity.notFound().build();
 	}
 	
 	/**

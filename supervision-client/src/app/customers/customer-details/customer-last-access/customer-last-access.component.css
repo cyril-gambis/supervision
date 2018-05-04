@@ -1,0 +1,20 @@
+.panel-content .users-content {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.never-connected-content {
+    max-height: 200px;
+    overflow-y: auto;
+    padding-top: 15px;
+}
+
+/* Column Widths */
+.mat-column-user,
+.mat-column-date {
+    flex: 1 0 180px;
+}
+
+.neverconnected-table {
+    padding-top: 15px;
+}

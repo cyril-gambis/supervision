@@ -93,4 +93,7 @@ export class UsageLogService {
             + '&pageId=' + pageId);
     }
     
+    getActivityLastRefreshDate(customerId: number): Observable<Date> {
+        return this.http.get<Date>('/api/usageLogOpt-custom/lastComputationAllAccessesAllPage?customerId=' + customerId);
+    }
 }
