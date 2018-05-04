@@ -10,7 +10,8 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 @RepositoryRestResource(collectionResourceRel = "users", path = "users")
 public interface UserRepository extends JpaRepository<User, Long>, UserRepositoryCustom {
 
-    @Query("SELECT u FROM User u WHERE u.primaryEmail.emailAddress = :emailAddress AND u.deleted = 0")
+    @Query("SELECT u FROM User u WHERE u.primaryEmail.emailAddress = :emailAddress "
+    		+ "AND u.deleted = 0")
     Optional<User> findByPrimaryEmailAddress(String emailAddress);
     
     List<User> findByFirstName(String firstName);
