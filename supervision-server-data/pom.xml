@@ -183,9 +183,9 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
-					<compilerArgs>
-						<arg>-parameters</arg>
-					</compilerArgs>
+	                <source>${java.version}</source>
+	                <target>${java.version}</target>
+	                <parameters>true</parameters>
 				</configuration>
 			</plugin>
 		</plugins>
