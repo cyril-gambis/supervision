@@ -28,6 +28,11 @@ public interface UsageLogClient {
 	Resources<UsageLogFull> findLastLogByCustomerIdAndUsageLogPageId(@RequestParam Long customerId, @RequestParam Long usageLogPageId);
 
 	@RequestMapping(method = RequestMethod.GET,
+			value = "/usageLogs/search/findLastLogByCustomerId?projection=usagelogfullprojection",
+			consumes = "application/json")
+	Resources<UsageLogFull> findLastLogByCustomerId(@RequestParam Long customerId);
+
+	@RequestMapping(method = RequestMethod.GET,
 			value = "/usageLogs/search/countByCustomerIdAndUsageLogPageId",
 			consumes = "application/json")
 	List<CountByUser> countByCustomerIdAndUsageLogPageId(@RequestParam Long customerId, @RequestParam Long usageLogPageId);

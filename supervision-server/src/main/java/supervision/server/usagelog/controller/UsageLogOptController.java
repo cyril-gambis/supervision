@@ -140,7 +140,7 @@ public class UsageLogOptController {
 	@ResponseBody
 	public ResponseEntity<String> computeLastAccesses(@RequestParam Long customerId) {
 
-		Resources<UsageLogFull> logs = usageLogClient.findLastLogByCustomerIdAndUsageLogPageId(customerId, OVERVIEW_PAGE_ID);
+		Resources<UsageLogFull> logs = usageLogClient.findLastLogByCustomerId(customerId);
 		
 		for (UsageLogFull log : logs.getContent()) {
 			// Delete previous last access if present

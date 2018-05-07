@@ -16,11 +16,12 @@ public interface UsageLogFullProjection {
 
     Long getTargetId();
 
-    @Value("#{target.usageLogPage.url}")
+    @Value("#{target.usageLogPage?.url}")
     String getUrl();
     
-    @Value("#{target.usageLogPage.description}")
+    @Value("#{target.usageLogPage?.description}")
     String getPage();
+
 /*
     @Value("#{target.categoryDescription}")
     String getCategory();
@@ -31,9 +32,10 @@ public interface UsageLogFullProjection {
     @Value("#{target.actionTypeDescription}")
     String getActionType();
 */
-    @Value("#{target.usageLogPage.id}")
+    /*
+    @Value("#{target.usageLogPage?.id}")
     Long getPageId();
-
+*/
 /*
     @Value("#{@alertFormatService.formatMessage(target, @currentUserService.getUserLanguage())}")
     String getFormattedMessage();

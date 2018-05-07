@@ -32,7 +32,18 @@ public interface UsageLogRepository extends JpaRepository<UsageLog, Long>, JpaSp
 			+ "GROUP BY ul.user "
 			+ "ORDER BY ul.date DESC")
 	List<UsageLog> findLastLogByCustomerIdAndUsageLogPageId(Long customerId, Long usageLogPageId);
-		
+
+	@Query(nativeQuery = true,  value=
+			"SELECT * FROM "
+			+ "(select ul.id, USER_ID as userid, max(ul.date) as maxdate "
+			+ "from USAGE_LOG ul, USER_ACCOUNT ua WHERE ua.CUSTOMER_FK = :customerId "
+			+ "AND ua.USER_FK = ul.USER_ID "
+			+ "GROUP BY USER_ID) r "
+			+ "INNER JOIN USAGE_LOG ul2 ON ul2.USER_ID = r.userid AND ul2.date = r.maxdate "
+			+ "group by user_id order by date desc")
+	List<UsageLog> findLastLogByCustomerId(Long customerId);
+
+	
 	@Query("SELECT new supervision.server.usagelog.CountByUser(ul.user, count(ul)) "
 			+ "FROM UsageLog ul, UserAccount ua "
 			+ "WHERE ua.customer.id = :customerId "
