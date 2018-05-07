@@ -199,6 +199,13 @@ export class CustomerActivityComponent implements OnInit {
         this.chartActivityColors.push('#3598DB'); //2A80B9
         return this.usageLogService.getCountByPageId(this.id, this.PZ_PROJECTS);
       })
+      .flatMap(countOverview2 => {
+        this.progress++;
+        this.chartActivityAllData.push(countOverview2);
+        this.chartActivityAllLabels.push('Overview PR');
+        this.chartActivityColors.push('#2A80B9');
+        return this.count(this.CALENDAR_PAGE_ID);
+      })
       .flatMap(countProjects => {
         this.nbProjects = countProjects;
         this.progress++;
@@ -245,13 +252,6 @@ export class CustomerActivityComponent implements OnInit {
         this.chartActivityAllLabels.push('Discussions');
         this.chartActivityColors.push('#1BBC9B');
         return this.usageLogService.getCountByPageId(this.id, this.PR_OVERVIEW_PAGE_ID)
-      })
-      .flatMap(countOverview2 => {
-        this.progress++;
-        this.chartActivityAllData.push(countOverview2);
-        this.chartActivityAllLabels.push('Overview PR');
-        this.chartActivityColors.push('#2A80B9');
-        return this.count(this.CALENDAR_PAGE_ID);
       })
       .flatMap(countCalendar => {
         this.progress++;
