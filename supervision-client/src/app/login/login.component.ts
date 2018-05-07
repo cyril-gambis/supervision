@@ -8,7 +8,7 @@ import { Logger } from '../shared/technical/logger';
     templateUrl: 'login.component.html',
     styleUrls: ['./login.component.css']
 })
- 
+
 export class LoginComponent implements OnInit {
 
     log = new Logger(Logger.DEBUG);
@@ -33,8 +33,9 @@ export class LoginComponent implements OnInit {
                 this.authenticationService.currentUser = user;
                 // If we tried to access an unauthenticated url, we go back to this url
                 if (this.authenticationService.redirectUrl) {
+                    let myUrl = this.authenticationService.redirectUrl;
                     this.authenticationService.redirectUrl = undefined;
-                    this.router.navigate([this.authenticationService.redirectUrl]);
+                    this.router.navigate([myUrl]);
                 } else {
                     this.router.navigate(['/supervision']);
                 }

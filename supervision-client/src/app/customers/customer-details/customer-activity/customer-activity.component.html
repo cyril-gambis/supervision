@@ -38,6 +38,8 @@
     <button mat-raised-button (click)="refreshAllAccessesAllPages()" color="warn" class="centered-button">
       <mat-icon class="menu-icon">refresh</mat-icon> Refresh all
     </button>
+
+    <div *ngIf="loading">{{ progress }} / {{ total }}</div>
   </div>
 </div>
   

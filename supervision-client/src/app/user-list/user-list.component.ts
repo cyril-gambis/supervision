@@ -14,8 +14,8 @@ export class UserListComponent implements OnInit {
 
   userById: User = undefined;
 
-  id = 1;
-  mail = 'patricka@test.com';
+  id: number = undefined;
+  mail = '';
 
   constructor(private http: HttpClient) { }
 
@@ -29,13 +29,13 @@ export class UserListComponent implements OnInit {
         data => this.theTestValue2 = data,
         error => this.theTestValue = 'Error'
       );*/
-
-      this.http.get<User>('/api/users/search/findByMail' + '?mail=' + this.mail)
-        .subscribe(
-          data => this.userByMail = data,
-          error => this.userByMail = undefined
-        );
-      
+      if (this.mail) {
+        this.http.get<User>('/api/users/search/findByMail' + '?mail=' + this.mail)
+          .subscribe(
+            data => this.userByMail = data,
+            error => this.userByMail = undefined
+          );
+      }
   }
 
   findById() {
@@ -45,13 +45,13 @@ export class UserListComponent implements OnInit {
         data => this.theTestValue2 = data,
         error => this.theTestValue = 'Error'
       );*/
-
-      this.http.get<User>('/api/users/' + this.id)
-        .subscribe(
-          data => this.userById = data,
-          error => this.userById = undefined
-        );
-      
+      if (this.id) {
+        this.http.get<User>('/api/users/' + this.id)
+          .subscribe(
+            data => this.userById = data,
+            error => this.userById = undefined
+          );
+      }      
   }
 
 }
