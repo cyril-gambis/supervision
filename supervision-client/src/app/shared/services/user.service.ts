@@ -23,4 +23,13 @@ export class UserService {
         return this.http.get<User[]>('/api-data/users/search/findByCustomerId?customerId=' + customerId)
             .map(res => res['_embedded']['users']);
     }
+
+    getUserByFreeText(stringInput: string): Observable<User[]> {
+        return this.http.get<User[]>('/api-data/users/search/findByFreeSearch?freeText=' + stringInput)
+            .map(res => res['_embedded']['users']);
+    }
+
+    getUserById(id: number): Observable<User> {
+        return this.http.get<User>('/api-data/users/' + id);
+    }
 }

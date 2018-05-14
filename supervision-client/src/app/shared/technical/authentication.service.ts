@@ -18,6 +18,8 @@ export class AuthenticationService {
     currentUser: User = undefined;
     redirectUrl: string = undefined;
 
+    error = '';
+
     TOKEN_AUTH_USERNAME = 'jwtclientid';
     TOKEN_AUTH_PASSWORD = 'XY7kmzoNzl100';
     TOKEN_NAME = 'access_token';
@@ -75,4 +77,11 @@ export class AuthenticationService {
         this.router.navigate(['/login']);
     }
 
+    loginPage(msg: string) {
+        this.error = msg;
+        this.router.navigate(['/login']);
+    }
+    clearError(): void {
+        this.error = '';
+    }
 }

@@ -22,6 +22,8 @@ import { CountByMonth } from '../../shared/models/count-by-month';
 import { forkJoin } from 'rxjs/observable/forkJoin';
 import { MatDialog, MatDialogConfig, MatSnackBar } from '@angular/material';
 import { AreYouSureComponent } from '../../dialog/are-you-sure/are-you-sure.component';
+import { RecentQueryService } from '../../shared/technical/recent-query/recent-query.service';
+import { RecentQuery } from '../../shared/technical/recent-query/recent-query';
 
 @Component({
   selector: 'app-customer-details',
@@ -45,6 +47,7 @@ export class CustomerDetailsComponent implements OnInit, AfterViewInit {
     private usageLogService: UsageLogService,
     private userService: UserService,
     private licenseService: LicenseService,
+    private recentQueryService: RecentQueryService,
     private route: ActivatedRoute,
     private dialog: MatDialog,
     private snackBar: MatSnackBar
@@ -57,6 +60,7 @@ export class CustomerDetailsComponent implements OnInit, AfterViewInit {
         this.customerService.getCustomer(this.id)
           .subscribe(customer => {
             this.customer = customer;
+            this.recentQueryService.addRecentQuery(new RecentQuery(this.id, this.customer.name));
           })
         this.licenseService.getLicenseByCustomerId(this.id)
           .subscribe(license => {

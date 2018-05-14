@@ -18,4 +18,6 @@ public interface UsageLogRepositoryCustom {
 
 	List<UsageLogFull> findLastOverviewLogsByCustomerId(Long customerId);
 
+	List<UsageLogFull> findLastByCustomerIdGroupByUser(Long customerId);
+	
 }

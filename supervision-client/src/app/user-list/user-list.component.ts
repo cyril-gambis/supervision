@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../shared/technical/authentication.service';
 import { HttpClient } from '@angular/common/http';
 import { User } from '../shared/models/user';
+import { UserService } from '../shared/services/user.service';
 
 @Component({
   selector: 'app-user-list',
@@ -10,48 +11,41 @@ import { User } from '../shared/models/user';
 })
 export class UserListComponent implements OnInit {
 
-  userByMail: User = undefined;
+  user: User = undefined;
 
-  userById: User = undefined;
+  name = '';
 
-  id: number = undefined;
-  mail = '';
+  users: User[] = [];
 
-  constructor(private http: HttpClient) { }
+  constructor(private userService: UserService) { }
 
   ngOnInit() {
   }
 
-  findByMail() {
-    /*
-    this.http.get<string>('/api/currentAccount')
-      .subscribe(
-        data => this.theTestValue2 = data,
-        error => this.theTestValue = 'Error'
-      );*/
-      if (this.mail) {
-        this.http.get<User>('/api/users/search/findByMail' + '?mail=' + this.mail)
-          .subscribe(
-            data => this.userByMail = data,
-            error => this.userByMail = undefined
-          );
+  resetSearch() {
+    this.user = undefined;
+    this.users = [];
+    if (this.name) {
+      if (Number(this.name) > 0) {
+        this.userService.getUserById(Number(this.name))
+          .subscribe(res => {
+              this.user = res;
+          });
+      } else {
+        this.userService.getUserByFreeText(this.name)
+          .subscribe(res => {
+            if (res.length === 1) {
+              this.user = res[0];
+            } else {
+              this.users = res;
+            }
+          });
       }
+    }
   }
 
-  findById() {
-    /*
-    this.http.get<string>('/api/currentAccount')
-      .subscribe(
-        data => this.theTestValue2 = data,
-        error => this.theTestValue = 'Error'
-      );*/
-      if (this.id) {
-        this.http.get<User>('/api/users/' + this.id)
-          .subscribe(
-            data => this.userById = data,
-            error => this.userById = undefined
-          );
-      }      
+  selectUser(user: User) {
+    this.user = user;
   }
 
 }

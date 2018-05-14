@@ -6,6 +6,11 @@ import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurerAdapt
 
 import supervision.server.customer.Customer;
 import supervision.server.mail.Mail;
+import supervision.server.usagelog.ActionCategory;
+import supervision.server.usagelog.ActionType;
+import supervision.server.usagelog.UsageLog;
+import supervision.server.usagelog.UsageLogPage;
+import supervision.server.usagelog.UserAction;
 import supervision.server.user.User;
 import supervision.server.userAccount.UserAccount;
 
@@ -27,6 +32,11 @@ public class RepositoryConfig extends RepositoryRestConfigurerAdapter {
         config.exposeIdsFor(UserAccount.class);
         config.exposeIdsFor(Mail.class);
         config.exposeIdsFor(Customer.class);
+        config.exposeIdsFor(UsageLog.class);
+        config.exposeIdsFor(UsageLogPage.class);
+        config.exposeIdsFor(ActionCategory.class);
+        config.exposeIdsFor(ActionType.class);
+        config.exposeIdsFor(UserAction.class);
 
         //config.setDefaultMediaType(MediaType.APPLICATION_JSON);
     }

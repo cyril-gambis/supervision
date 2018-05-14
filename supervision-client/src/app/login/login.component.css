@@ -12,3 +12,8 @@
     text-align: center;
     padding: 0 10px 20px;
 }
+
+.error {
+    text-align: center;
+    margin: 0 0 10px;
+}

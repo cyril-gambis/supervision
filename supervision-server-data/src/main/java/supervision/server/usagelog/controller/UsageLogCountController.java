@@ -42,6 +42,13 @@ public class UsageLogCountController {
 	}
 
 	@ResponseBody
+	@GetMapping(value = "/usageLogs/search/countByCustomerIdGroupByMonth",
+			produces = { MediaType.APPLICATION_JSON_VALUE })
+	public List<CountByUserByMonth> countByMonth(@RequestParam Long customerId) {
+		return usageLogRepository.countByCustomerIdGroupByMonth(customerId);
+	}
+	
+	@ResponseBody
 	@GetMapping(value = "/usageLogs/search/countByCustomerIdAndUsageLogPageIdGroupByDay",
 			produces = { MediaType.APPLICATION_JSON_VALUE })
 	public List<CountByDay> countByDay(@RequestParam Long customerId, @RequestParam Long usageLogPageId) {

@@ -15,7 +15,7 @@ export class UsageLogService {
     constructor(private http: HttpClient) { }
  
     getUsageLogs(reportCommand: ReportCommand): Observable<UsageLog[]> { 
-        return this.http.post<UsageLog[]>('/api-data/searchUsageLogs', reportCommand);
+        return this.http.post<UsageLog[]>('/api-data/usageLogs/searchUsageLogs', reportCommand);
     }
 
     getOverviewLogs(customerId: number): Observable<UsageLog[]> {

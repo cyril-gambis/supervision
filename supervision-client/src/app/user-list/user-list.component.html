@@ -1,19 +1,48 @@
-<mat-form-field>
-    <input matInput placeholder="Mail" type="text" [(ngModel)]="mail">
-</mat-form-field>
-<button mat-raised-button (click)="findByMail()" type="submit" color="primary">
-  <mat-icon aria-label="mail">mail</mat-icon> findByMail
-</button>
-<p>
-    Result: {{ userByMail?.firstName }} {{ userByMail?.lastName }}
-</p>
+<div class="dashboard-container">
 
-<mat-form-field>
-    <input matInput placeholder="Id" type="text" [(ngModel)]="id">
-</mat-form-field>
-<button mat-raised-button (click)="findById()" type="submit" color="primary">
-  <mat-icon aria-label="person">person</mat-icon> findById
-</button>
-<p>
-    Result: {{ userById?.firstName }} {{ userById?.lastName }} (email: {{ userById?.primaryEmail.emailAddress }})
-</p>
+    <div class="panel">
+    
+      <div class="panel-title">User</div>
+      <div class="panel-content">
+        
+        <mat-form-field>
+            <input matInput placeholder="Name" type="text" [(ngModel)]="name" (keyup.enter)="resetSearch()">
+        </mat-form-field>
+        <button mat-raised-button (click)="resetSearch()" type="submit" color="primary">
+          <mat-icon aria-label="Search">search</mat-icon> Search
+        </button>        
+
+        <ul>
+            <li *ngFor="let user of users" (click)="selectUser(user)" class="link">{{ user.firstName }} {{ user.lastName }} ({{ user.id }})</li>
+        </ul>
+
+      </div>
+    </div>
+
+    <div class="panel">
+    
+        <div class="panel-title">User</div>
+        <div class="panel-content">
+          
+            <div *ngIf="user">
+                <h2 class="customer-name">{{ user.firstName }} {{ user.lastName }}</h2>
+
+                <div class="main-info-fields">
+        
+                    <app-field [title]="'Id'" [value]="user.id"></app-field>
+                    <app-field [title]="'Email'" [value]="user.primaryEmail?.emailAddress"></app-field>
+                    <app-field [title]="'Company'" [value]="user.company"></app-field>
+                    <!--
+                    <app-field [title]="'Site'" [value]="customer.site"></app-field>
+                    <app-field [title]="'Status'" [value]="formattedStatus" [valueClass]="statusClass"></app-field>
+                    <div *ngIf="customer.deleted == 1" class="red">DELETED</div>
+                    <app-field [title]="'Back office comments'" [value]="customer.backOfficeComments" *ngIf="customer.backOfficeComments"></app-field>
+        -->
+                </div>
+            </div>
+            
+        </div>
+    </div>
+  
+
+</div>

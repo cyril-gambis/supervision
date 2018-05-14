@@ -24,4 +24,7 @@ public interface UserRepository extends JpaRepository<User, Long>, UserRepositor
     @Query("SELECT ua.user FROM UserAccount ua WHERE ua.customer.id = :customerId")
     List<User> findByCustomerId(Long customerId);
 
+    @Query("SELECT u FROM User u WHERE u.firstName LIKE CONCAT('%', :freeText, '%') "
+    		+ "OR u.lastName LIKE CONCAT('%', :freeText, '%')")
+    List<User> findByFreeSearch(String freeText);
 }

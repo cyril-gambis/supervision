@@ -30,9 +30,16 @@ export class ErrorRequestInterceptor implements HttpInterceptor {
                         if (err.error.error && (err.error.error === 'invalid_token'))
                         console.log('Invalid token, try to refresh token if possible, but for now we logout');
                         this.authenticationService.logout();
+                    } else if (err.status === 0) {
+                        console.log('Unknown error - Server probably not running');
+                        this.authenticationService.loginPage('Unknown error - Server probably not running');
+                    } else if (err.status === 400) {
+                        this.authenticationService.loginPage('Bad credentials');
                     }
                 }
-//                return Observable.throw(err);
+    //            console.log("ERROR!");
+    //            console.log(err);
+                return Observable.throw(err);
             });
     }
 

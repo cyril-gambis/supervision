@@ -4,7 +4,11 @@
   </div>
   <div class="panel-content">
 
-    <div>
+    <div class="spinner-container" *ngIf="loading">
+      <mat-spinner [diameter]="50"></mat-spinner>
+    </div>
+
+    <div [ngStyle]="{'visibility': (loading?'hidden':'visible')}">
       <canvas id="canvas">{{ chart }}</canvas>
     </div>
 
@@ -17,9 +21,15 @@
   </div>
   <div class="panel-content">
 
+    <div class="spinner-container" *ngIf="loading">
+      <mat-spinner [diameter]="50"></mat-spinner>
+    </div>
+
+    <div [ngStyle]="{'visibility': (loading?'hidden':'visible')}">
       <div class="chart-container" style="position: relative; height: 400px; width: auto">
         <canvas id="canvasActivityAll">{{ chartActivityAll }}</canvas>
       </div>
+    </div>
 
   </div>
 </div>

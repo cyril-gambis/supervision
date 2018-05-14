@@ -12,25 +12,26 @@ import org.springframework.web.bind.annotation.RequestParam;
 import supervision.server.usagelog.CountByDay;
 import supervision.server.usagelog.CountByUser;
 import supervision.server.usagelog.CountByUserByMonth;
+import supervision.server.usagelog.UsageLog;
 import supervision.server.usagelog.UsageLogFull;
 
 @FeignClient("SUPERVISION-DATA/api/v1.0")
 public interface UsageLogClient {
 
 	@RequestMapping(method = RequestMethod.GET,
-			value = "/usageLogs/search/findFirstByUserIdAndUsageLogPageIdOrderByDateDesc?projection=usagelogfullprojection",
+			value = "/usageLogs/search/findFirstByUserIdAndUsageLogPageIdOrderByDateDesc",
 			consumes = "application/json")
-	UsageLogFull findFirstByUserIdAndUsageLogPageIdOrderByDateDesc(@RequestParam Long userId, @RequestParam Long usageLogPageId);
+	UsageLog findFirstByUserIdAndUsageLogPageIdOrderByDateDesc(@RequestParam Long userId, @RequestParam Long usageLogPageId);
 	
 	@RequestMapping(method = RequestMethod.GET,
-			value = "/usageLogs/search/findLastLogByCustomerIdAndUsageLogPageId?projection=usagelogfullprojection",
+			value = "/usageLogs/search/findLastLogByCustomerIdAndUsageLogPageId",
 			consumes = "application/json")	
-	Resources<UsageLogFull> findLastLogByCustomerIdAndUsageLogPageId(@RequestParam Long customerId, @RequestParam Long usageLogPageId);
+	Resources<UsageLog> findLastLogByCustomerIdAndUsageLogPageId(@RequestParam Long customerId, @RequestParam Long usageLogPageId);
 
 	@RequestMapping(method = RequestMethod.GET,
-			value = "/usageLogs/search/findLastLogByCustomerId?projection=usagelogfullprojection",
+			value = "/usageLogs/search/findLastByCustomerIdGroupByUser",
 			consumes = "application/json")
-	Resources<UsageLogFull> findLastLogByCustomerId(@RequestParam Long customerId);
+	Resources<UsageLogFull> findLastByCustomerIdGroupByUser(@RequestParam Long customerId);
 
 	@RequestMapping(method = RequestMethod.GET,
 			value = "/usageLogs/search/countByCustomerIdAndUsageLogPageId",
@@ -42,6 +43,11 @@ public interface UsageLogClient {
 			consumes = "application/json")
 	List<CountByUserByMonth> countByCustomerIdAndUsageLogPageIdGroupByMonth(@RequestParam Long customerId, @RequestParam Long usageLogPageId);
 
+	@RequestMapping(method = RequestMethod.GET,
+			value = "/usageLogs/search/countByCustomerIdGroupByMonth",
+			consumes = "application/json")
+	List<CountByUserByMonth> countByCustomerIdGroupByMonth(@RequestParam Long customerId);
+	
 	@GetMapping(value = "/usageLogs/search/countByCustomerIdAndUsageLogPageIdGroupByDay",
 			consumes = "application/json")
 	List<CountByDay> countByCustomerIdAndUsageLogPageIdGroupByDay(@RequestParam Long cutomerId, @RequestParam Long usageLogPageId);

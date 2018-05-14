@@ -89,6 +89,7 @@ a,
 a:hover,
 .link:hover {
     text-decoration: underline;
+    cursor: pointer;
 }
 
 .status-active {

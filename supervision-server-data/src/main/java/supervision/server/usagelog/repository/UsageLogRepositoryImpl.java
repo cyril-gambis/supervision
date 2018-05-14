@@ -1,5 +1,6 @@
 package supervision.server.usagelog.repository;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -102,6 +103,22 @@ public class UsageLogRepositoryImpl implements UsageLogRepositoryCustom {
 			return usageLog;
 		}
 		return null;
+	}
+
+	@Override
+	public List<UsageLogFull> findLastByCustomerIdGroupByUser(Long customerId) {
+
+		List<User> usersByCustomerId = userRepository.findByCustomerId(customerId);
+		
+		List<UsageLog> logs = new ArrayList<UsageLog>();
+		for (User user : usersByCustomerId) {
+			UsageLog log = usageLogRepository.findFirstByUserIdOrderByDateDesc(user.getId());
+			if (log != null) {
+				logs.add(log);
+			}
+		}
+		
+		return wrap(logs);
 	}
 
 /*

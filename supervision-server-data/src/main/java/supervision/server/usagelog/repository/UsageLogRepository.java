@@ -26,7 +26,9 @@ public interface UsageLogRepository extends JpaRepository<UsageLog, Long>, JpaSp
 	List<UsageLog> findRecentOverviewLogsByUserId(Long userId);
 	
 	UsageLog findFirstByUserIdAndUsageLogPageIdOrderByDateDesc(Long userId, Long usageLogPageId);
-	
+
+	UsageLog findFirstByUserIdOrderByDateDesc(Long userId);
+
 	@Query("SELECT ul FROM UsageLog ul, UserAccount ua WHERE ua.customer.id = :customerId "
 			+ "AND ua.user = ul.user AND ul.usageLogPage.id = :usageLogPageId "
 			+ "GROUP BY ul.user "
@@ -42,7 +44,6 @@ public interface UsageLogRepository extends JpaRepository<UsageLog, Long>, JpaSp
 			+ "INNER JOIN USAGE_LOG ul2 ON ul2.USER_ID = r.userid AND ul2.date = r.maxdate "
 			+ "group by user_id order by date desc")
 	List<UsageLog> findLastLogByCustomerId(Long customerId);
-
 	
 	@Query("SELECT new supervision.server.usagelog.CountByUser(ul.user, count(ul)) "
 			+ "FROM UsageLog ul, UserAccount ua "
@@ -58,6 +59,13 @@ public interface UsageLogRepository extends JpaRepository<UsageLog, Long>, JpaSp
 			+ "GROUP BY year(ul.date), month(ul.date), ul.user")
 	List<CountByUserByMonth> countByCustomerIdAndUsageLogPageIdGroupByMonth(Long customerId, Long usageLogPageId);
 
+	@Query("SELECT new supervision.server.usagelog.CountByUserByMonth(ul.user, count(ul), month(ul.date), year(ul.date)) "
+			+ "FROM UsageLog ul, UserAccount ua "
+			+ "WHERE ua.customer.id = :customerId "
+				+ "AND ua.user = ul.user "
+			+ "GROUP BY year(ul.date), month(ul.date), ul.user")
+	List<CountByUserByMonth> countByCustomerIdGroupByMonth(Long customerId);
+	
 	@Query("SELECT new supervision.server.usagelog.CountByDay(day(ul.date), month(ul.date), year(ul.date), count(ul)) "
 			+ "FROM UsageLog ul, UserAccount ua "
 			+ "WHERE ua.customer.id = :customerId "

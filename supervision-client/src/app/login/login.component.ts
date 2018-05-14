@@ -15,7 +15,6 @@ export class LoginComponent implements OnInit {
 
     loginData = { username: 'admin', password: 'admin'};
     loading = false;
-    error = '';
  
     constructor(
         private router: Router,
@@ -27,6 +26,8 @@ export class LoginComponent implements OnInit {
     login() {
 
         this.log.d('Calling login()');
+
+        this.authenticationService.clearError();
 
         this.authenticationService.login(this.loginData.username, this.loginData.password)
             .subscribe(user => {
@@ -40,5 +41,9 @@ export class LoginComponent implements OnInit {
                     this.router.navigate(['/supervision']);
                 }
             });
+    }
+
+    get error(): string {
+        return this.authenticationService.error;
     }
 }

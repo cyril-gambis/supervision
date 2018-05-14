@@ -140,7 +140,7 @@ public class UsageLogOptController {
 	@ResponseBody
 	public ResponseEntity<String> computeLastAccesses(@RequestParam Long customerId) {
 
-		Resources<UsageLogFull> logs = usageLogClient.findLastLogByCustomerId(customerId);
+		Resources<UsageLogFull> logs = usageLogClient.findLastByCustomerIdGroupByUser(customerId);
 		
 		for (UsageLogFull log : logs.getContent()) {
 			// Delete previous last access if present
@@ -152,26 +152,6 @@ public class UsageLogOptController {
 		}
 
 		return ResponseEntity.ok("Compute completed on " + logs.getContent().size() + " users.");
-	}
-
-	@GetMapping(value="/computeAllAccesses")
-	@ResponseBody
-	public ResponseEntity<String> computeAllAccessesByMonth(@RequestParam Long customerId) {
-		
-		List<CountByUserByMonth> countByUser =
-				usageLogClient.countByCustomerIdAndUsageLogPageIdGroupByMonth(customerId, OVERVIEW_PAGE_ID);
-		
-		for (CountByUserByMonth count : countByUser) {
-			
-			// Delete previous entry
-			nbHitsPerMonthRepository.deleteByUserIdAndMonthAndYearAndPageId(count.getUser().getId(), count.getMonth(), count.getYear(), OVERVIEW_PAGE_ID);
-			
-			nbHitsPerMonthRepository.save(new NbHitsPerMonth(customerId, count.getUser().getId(), count.getMonth(),
-					count.getYear(), count.getCount(), OVERVIEW_PAGE_ID, LocalDateTime.now()));
-			
-		}
-
-		return ResponseEntity.ok("Compute completed on " + countByUser.size() + " lines.");
 	}
 	
 	@GetMapping(value="/computeAllAccessesAllPages")
@@ -186,6 +166,9 @@ public class UsageLogOptController {
 
 		int nbLinesComputed = 0;
 		
+		// reset nb hits per month repository for this customer
+		nbHitsPerDayRepository.deleteByCustomerId(customerId);
+		
 		for (Long id : pageIds) {
 			List<CountByUserByMonth> countByUser =
 					usageLogClient.countByCustomerIdAndUsageLogPageIdGroupByMonth(customerId, id);
@@ -193,7 +176,8 @@ public class UsageLogOptController {
 			for (CountByUserByMonth count : countByUser) {
 				
 				// Delete previous entry
-				nbHitsPerMonthRepository.deleteByUserIdAndMonthAndYearAndPageId(count.getUser().getId(), count.getMonth(), count.getYear(), id);
+// Not used anymore, we bulk delete at the start of the method				
+//				nbHitsPerMonthRepository.deleteByUserIdAndMonthAndYearAndPageId(count.getUser().getId(), count.getMonth(), count.getYear(), id);
 				
 				nbHitsPerMonthRepository.save(new NbHitsPerMonth(customerId, count.getUser().getId(), count.getMonth(),
 						count.getYear(), count.getCount(), id, LocalDateTime.now()));

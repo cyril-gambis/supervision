@@ -39,6 +39,7 @@ import { AdminComponent } from './admin/admin.component';
 import { AreYouSureComponent } from './dialog/are-you-sure/are-you-sure.component';
 import { CustomerActivityComponent } from './customers/customer-details/customer-activity/customer-activity.component';
 import { CustomerLastAccessComponent } from './customers/customer-details/customer-last-access/customer-last-access.component';
+import { RecentQueryService } from './shared/technical/recent-query/recent-query.service';
 
 @NgModule({
   declarations: [
@@ -80,6 +81,7 @@ import { CustomerLastAccessComponent } from './customers/customer-details/custom
     AuthenticationService,
     UserService,
     TokenService,
+    RecentQueryService,
 
     UsageLogService,
     CustomerService,

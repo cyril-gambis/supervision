@@ -2,13 +2,18 @@
 
 <div class="panel">
 
-  <div class="panel-title">Widget1</div>
+  <div class="panel-title">Recent queries</div>
   <div class="panel-content">
-
-    Work in progress *
-
+    <ul>
+        <li *ngFor="let query of queries">
+            <a [routerLink]="['/supervision/customers/customer-details/', query.id]">
+                {{ query.name }}
+            </a>
+        </li>
+    </ul>
   </div>
 </div>
+
 <!--
 <div class="panel">
 

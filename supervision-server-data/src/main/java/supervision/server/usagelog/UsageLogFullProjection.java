@@ -22,7 +22,7 @@ public interface UsageLogFullProjection {
     @Value("#{target.usageLogPage?.description}")
     String getPage();
 
-/*
+
     @Value("#{target.categoryDescription}")
     String getCategory();
 
@@ -31,16 +31,15 @@ public interface UsageLogFullProjection {
     
     @Value("#{target.actionTypeDescription}")
     String getActionType();
-*/
-    /*
+
     @Value("#{target.usageLogPage?.id}")
     Long getPageId();
-*/
+
 /*
     @Value("#{@alertFormatService.formatMessage(target, @currentUserService.getUserLanguage())}")
     String getFormattedMessage();
 */
-/*
+
     @Value("#{target.getUser().getFirstName()}")
     String getFirstName();
     
@@ -49,6 +48,6 @@ public interface UsageLogFullProjection {
 
     @Value("#{target.getUser().getPrimaryEmail().getEmailAddress()}")
     String getEmailAddress();
-*/
+
     User getUser();
 }

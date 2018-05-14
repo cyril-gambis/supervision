@@ -19,4 +19,7 @@ public interface NbHitsPerDayRepository extends JpaRepository<NbHitsPerDay, Long
 	@Transactional
 	Long deleteByDayAndMonthAndYearAndCustomerIdAndPageId(Integer day, Integer month, Integer year, Long customerId,Long pageId);
 
+	@Transactional
+	Long deleteByCustomerId(Long customerId);
+
 }
