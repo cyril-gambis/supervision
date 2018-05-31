@@ -2,11 +2,14 @@
     display: flex;
 }
 .field-title {
-    flex: 0 0 auto;
+    flex: 0 0 120px;
     text-align: left;
-    min-width: 80px;
-    max-width: 80px;
 }
 .field-value {
     flex: 1 1 auto;
+}
+
+.title-value {
+    font-size: larger;
+    margin: 10px auto;
 }

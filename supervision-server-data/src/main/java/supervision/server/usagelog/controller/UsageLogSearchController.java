@@ -23,20 +23,20 @@ public class UsageLogSearchController {
 	@Autowired
 	private UsageLogRepository usageLogRepository;
 
-	@PostMapping("/searchUsageLogs")
+	@PostMapping("/search/searchUsageLogs")
 	@ResponseBody
-	public List<UsageLogFull> searchUsageLogs(@RequestBody ReportCommand command) {
-		return usageLogRepository.searchUsageLogs(command);
+	public ResponseEntity<Resources<UsageLogFull>> searchUsageLogs(@RequestBody ReportCommand command) {
+		return ResponseEntity.ok().body(new Resources<>(usageLogRepository.searchUsageLogs(command)));
 	}
 
-	@GetMapping("/findRecentOverviewLogs")
-	public List<UsageLogFull> findRecentOverviewLogs(Long customerId) {
-		return usageLogRepository.findRecentOverviewLogsByCustomerId(customerId);
+	@GetMapping("/search/findLastUsageLogsByCustomerId")
+	public ResponseEntity<Resources<UsageLogFull>> findLastUsageLogsByCustomerId(Long customerId) {
+		return ResponseEntity.ok().body(new Resources<>(usageLogRepository.findLastUsageLogsByCustomerId(customerId)));
 	}
 
-	@GetMapping("/findLastOverviewLogsByCustomerId")
-	public List<UsageLogFull> findLastOverviewLogsByCustomerId(Long customerId) {
-		return usageLogRepository.findLastOverviewLogsByCustomerId(customerId);
+	@GetMapping("/search/findLastOverviewLogsByCustomerId")
+	public ResponseEntity<Resources<UsageLogFull>> findLastOverviewLogsByCustomerId(Long customerId) {
+		return ResponseEntity.ok().body(new Resources<>(usageLogRepository.findLastOverviewLogsByCustomerId(customerId)));
 	}
 
 	@GetMapping("/search/findLastByCustomerIdGroupByUser")

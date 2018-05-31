@@ -44,7 +44,7 @@ public class UsageLogRepositoryImpl implements UsageLogRepositoryCustom {
 	}
 	
 	@Override
-	public List<UsageLogFull> findRecentOverviewLogsByCustomerId(Long customerId) {
+	public List<UsageLogFull> findLastUsageLogsByCustomerId(Long customerId) {
 		// Get Users of this planzone
 		List<UserAccount> userAccounts = userAccountRepository.findByCustomerId(customerId);
 		
@@ -54,7 +54,7 @@ public class UsageLogRepositoryImpl implements UsageLogRepositoryCustom {
 		
 		return wrap(users.stream()
 			.flatMap(u -> {
-				List<UsageLog> logs = usageLogRepository.findRecentOverviewLogsByUserId(u.getId());
+				List<UsageLog> logs = usageLogRepository.findTop100ByUserIdOrderByDateDesc(u.getId());
 				if (logs != null) {
 					return logs.stream();
 				} else {
@@ -75,7 +75,7 @@ public class UsageLogRepositoryImpl implements UsageLogRepositoryCustom {
 				.filter(Objects::nonNull)
 			.collect(Collectors.toList());
 		
-		return wrap(users.stream()
+		List<UsageLog> logs = users.stream()
 			.flatMap(u -> {
 				UsageLog log = usageLogRepository.findLastOverviewLogByUserId(u.getId());
 				if (log == null) {
@@ -84,8 +84,10 @@ public class UsageLogRepositoryImpl implements UsageLogRepositoryCustom {
 					return Arrays.asList(log).stream();
 				}
 			})
-			.collect(Collectors.toList())
-			);
+			.collect(Collectors.toList());
+
+		List<UsageLogFull> result = wrap(logs);
+		return result;
 	}
 	
 	Long USAGE_LOG_PAGE_ID_OVERVIEW = 2L;

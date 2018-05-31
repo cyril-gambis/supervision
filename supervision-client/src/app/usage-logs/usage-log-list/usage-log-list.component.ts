@@ -4,6 +4,7 @@ import { UsageLogService } from '../../shared/services/usage-log.service';
 import { ReportCommand } from '../../shared/technical/reporting/report-command';
 import { ReportEntity } from '../../shared/technical/reporting/report-entity';
 import { SortDirection } from '../../shared/technical/reporting/sort-direction';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-usage-log-list',
@@ -18,7 +19,18 @@ export class UsageLogListComponent implements OnInit {
 
   customerId = 1;
 
-  constructor(private usageLogService: UsageLogService) { }
+  constructor(
+    private usageLogService: UsageLogService,
+    private activatedRoute: ActivatedRoute
+  ) {
+    this.activatedRoute.queryParams.subscribe(params => {
+      let id = params['id'];
+      if (id) {
+        this.customerId = id;
+        this.getLastUsageLogs();
+      }
+    });
+  }
 
   ngOnInit() {
   }
@@ -45,8 +57,8 @@ export class UsageLogListComponent implements OnInit {
     return typeof o;
   }
 
-  getOverviewLogs() {
-    this.usageLogService.getOverviewLogs(this.customerId)
+  getLastUsageLogs() {
+    this.usageLogService.getLastUsageLogs(this.customerId)
       .subscribe(data => this.usageLogs = data);
   }
 }

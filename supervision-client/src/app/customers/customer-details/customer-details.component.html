@@ -11,13 +11,14 @@
       
               <app-field [title]="'Id'" [value]="customer.id"></app-field>
               <app-field [title]="'Site'" [value]="customer.site"></app-field>
+              <app-field [title]="'Signup date'" [value]="formatDate(customer.signupDate)"></app-field>
               <app-field [title]="'Status'" [value]="formattedStatus" [valueClass]="statusClass"></app-field>
               <div *ngIf="customer.deleted == 1" class="red">DELETED</div>
               <app-field [title]="'Back office comments'" [value]="customer.backOfficeComments" *ngIf="customer.backOfficeComments"></app-field>
       
             </div>
 
-            <button mat-raised-button [routerLink]="['/supervision/usage-logs/overview/', customer.id]" type="submit" color="primary" class="centered-button">
+            <button mat-raised-button [routerLink]="['/supervision/usage-logs/usage-log-list']" [queryParams]="{'id': customer.id}" type="submit" color="primary" class="centered-button">
                 <mat-icon class="menu-icon">assessment</mat-icon> Overview logs
             </button>
           </div>
@@ -42,7 +43,9 @@
                     <app-field [title]="'Next reminder'" [value]="formatDate(license?.nextReminderDate)" [titleWidth]="120"></app-field>
                   </div>    
             </div>
-          </div>        
+        </div>
+
+        <app-customer-invoice></app-customer-invoice>        
 
   </div>
 

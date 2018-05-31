@@ -40,6 +40,9 @@ import { AreYouSureComponent } from './dialog/are-you-sure/are-you-sure.componen
 import { CustomerActivityComponent } from './customers/customer-details/customer-activity/customer-activity.component';
 import { CustomerLastAccessComponent } from './customers/customer-details/customer-last-access/customer-last-access.component';
 import { RecentQueryService } from './shared/technical/recent-query/recent-query.service';
+import { CustomerInvoiceComponent } from './customers/customer-details/customer-invoice/customer-invoice.component';
+import { InvoiceService } from './shared/services/invoice.service';
+import { CustomerInvoiceListComponent } from './customers/customer-details/customer-invoice-list/customer-invoice-list.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +64,9 @@ import { RecentQueryService } from './shared/technical/recent-query/recent-query
     AdminComponent,
     AreYouSureComponent,
     CustomerActivityComponent,
-    CustomerLastAccessComponent
+    CustomerLastAccessComponent,
+    CustomerInvoiceComponent,
+    CustomerInvoiceListComponent
   ],
   imports: [
     BrowserModule,
@@ -86,6 +91,7 @@ import { RecentQueryService } from './shared/technical/recent-query/recent-query
     UsageLogService,
     CustomerService,
     LicenseService,
+    InvoiceService,
 
     CustomerListData,
 
@@ -106,6 +112,8 @@ import { RecentQueryService } from './shared/technical/recent-query/recent-query
     }
   ],
   bootstrap: [AppComponent],
-  entryComponents:  [AreYouSureComponent]
+  entryComponents:[
+    AreYouSureComponent, CustomerInvoiceListComponent
+  ]
 })
 export class AppModule { }

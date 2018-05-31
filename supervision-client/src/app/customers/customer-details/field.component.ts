@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { CustomerService } from '../../shared/services/customer.service';
 import { ActivatedRoute } from '@angular/router';
 import { Customer } from '../../shared/models/customer';
@@ -6,7 +6,7 @@ import { Customer } from '../../shared/models/customer';
 @Component({
     selector: 'app-field',
     template: `
-        <div class="field">
+        <div class="field" [ngClass]="fieldClass">
             <div class="field-title" [ngStyle]="titleStyle()">{{ title }}</div><div class="field-value" [ngClass]="valueClass">{{ value }}</div>
         </div>
     `,
@@ -17,7 +17,8 @@ export class FieldComponent {
     @Input() title: string;
     @Input() value: string;
 
-    @Input() valueClass: string;
+    @Input() fieldClass: string = '';
+    @Input() valueClass: string = '';
 
     @Input() titleWidth: number;
 
@@ -29,4 +30,5 @@ export class FieldComponent {
         }
         return {};
     }
+
 }

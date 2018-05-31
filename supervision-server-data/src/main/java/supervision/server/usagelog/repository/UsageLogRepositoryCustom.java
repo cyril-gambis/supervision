@@ -12,7 +12,7 @@ public interface UsageLogRepositoryCustom {
 
 	List<UsageLogFull> searchUsageLogs(@RequestBody ReportCommand command);
 
-	List<UsageLogFull> findRecentOverviewLogsByCustomerId(Long customerId);
+	List<UsageLogFull> findLastUsageLogsByCustomerId(Long customerId);
 
 	UsageLog findLastOverviewLogByUserId(Long userId);
 

@@ -21,9 +21,8 @@ public interface UsageLogRepository extends JpaRepository<UsageLog, Long>, JpaSp
 			+ "ul.DATE BETWEEN CURDATE() - INTERVAL 35 DAY AND CURDATE() ORDER BY ul.DATE desc LIMIT 100")
 	List<UsageLog> findTop100OverviewLogsOrderByDateDesc();
 
-	@Query("SELECT ul FROM UsageLog ul WHERE ul.usageLogPage.id = 2 AND datediff(curdate(),ul.date)<40 "
-			+ "AND ul.user.id = :userId")
-	List<UsageLog> findRecentOverviewLogsByUserId(Long userId);
+//	@Query("SELECT ul FROM UsageLog ul WHERE datediff(curdate(),ul.date)<40 AND ul.user.id = :userId")
+	List<UsageLog> findTop100ByUserIdOrderByDateDesc(Long userId);
 	
 	UsageLog findFirstByUserIdAndUsageLogPageIdOrderByDateDesc(Long userId, Long usageLogPageId);
 

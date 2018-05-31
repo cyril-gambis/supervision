@@ -15,16 +15,18 @@ export class UsageLogService {
     constructor(private http: HttpClient) { }
  
     getUsageLogs(reportCommand: ReportCommand): Observable<UsageLog[]> { 
-        return this.http.post<UsageLog[]>('/api-data/usageLogs/searchUsageLogs', reportCommand);
+        return this.http.post<UsageLog[]>('/api-data/usageLogs/search/searchUsageLogs', reportCommand)
+            .map(res => res['_embedded']['usageLogFulls']);
     }
 
-    getOverviewLogs(customerId: number): Observable<UsageLog[]> {
+    getLastUsageLogs(customerId: number): Observable<UsageLog[]> {
         /*
         return this.http.get<UsageLog[]>('/api-data/usageLogs/search/findTop100OverviewLogsOrderByDateDesc?projection=usagelogfullprojection')
             .map(res => res['_embedded']['usageLogs']);
         */
        
-        return this.http.get<UsageLog[]>('/api-data/findRecentOverviewLogs?customerId=' + customerId)
+        return this.http.get<UsageLog[]>('/api-data/usageLogs/search/findLastUsageLogsByCustomerId?customerId=' + customerId)
+            .map(res => res['_embedded']['usageLogFulls'])
             .map((logs) => {
                 logs.sort((l1: UsageLog, l2: UsageLog) => {
                     return l1.date > l2.date ? -1 : 1;
@@ -34,7 +36,8 @@ export class UsageLogService {
     }
 
     getLastOverviewLogs(customerId: number): Observable<UsageLog[]> {
-        return this.http.get<UsageLog[]>('/api-data/findLastOverviewLogsByCustomerId?customerId=' + customerId)
+        return this.http.get<UsageLog[]>('/api-data/usageLogs/search/findLastOverviewLogsByCustomerId?customerId=' + customerId)
+            .map(res => res['_embedded']['usageLogFulls'])
             .map((logs) => {
                 logs.sort((l1: UsageLog, l2: UsageLog) => {
                     return l1.date > l2.date ? -1 : 1;
@@ -85,7 +88,7 @@ export class UsageLogService {
                     }
                 });
                 return counts;
-        });;
+            });
     }
 
     getCountByPageId(customerId: number, pageId: number): Observable<number> {

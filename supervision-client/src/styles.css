@@ -3,7 +3,7 @@
 
 body {
     font-family: "Roboto", "Trebuchet MS", Arial, Helvetica, sans-serif;
-    /*font-size: 1.4em !important;*/
+    font-size: 1em;
     
     /*line-height: 1.1 !important;*/
         
@@ -22,10 +22,11 @@ body {
 .panel-title-2,
 .panel-title-3,
 .panel-title-4,
-.panel-title-5 {
+.panel-title-5,
+.panel-title-6 {
     padding: 10px;
     color: white;
-    font-size: 17px;
+    font: 500 17px Roboto,"Helvetica Neue",sans-serif;
     display: flex;
 }
 
@@ -55,6 +56,9 @@ body {
     background-color: #E77E23;
 }
 
+.panel-title-6 {
+    background-color: #df4938;
+}
 
 .panel-content {
     padding: 10px 10px 20px 10px;
@@ -118,4 +122,8 @@ a:hover,
     text-align: center !important;
     margin: 20px auto 5px !important;
     display: block !important;
+}
+
+.invoice-list-panel .mat-dialog-container {
+    padding: 0;
 }

@@ -123,7 +123,7 @@ export class CustomerLastAccessComponent implements OnInit {
 
   numberOfUsers(): string {
     if (this.lastAccessesInitialized) {
-      return '(' + (this.userAccesses.length + this.neverConnectedUsers.length) + ')';
+      return '(Active: ' + this.userAccesses.length + ' / Other: ' + this.neverConnectedUsers.length + ')';
     }
     return '';
   }

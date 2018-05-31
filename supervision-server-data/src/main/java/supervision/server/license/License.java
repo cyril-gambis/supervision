@@ -15,6 +15,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.NotFound;
 
 import lombok.Data;
+import supervision.server.invoice.Purchase;
 import supervision.server.user.User;
 
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
@@ -116,11 +117,9 @@ public class License {
 
 //    private Account account;
 
-    
-//    @JoinColumn(name = "PURCHASE_FK")
-  //  @ManyToOne
-   // @NotFound(action = org.hibernate.annotations.NotFoundAction.IGNORE)
-
-    //    private Purchase purchase;
+    @JoinColumn(name = "PURCHASE_FK")
+    @ManyToOne
+    @NotFound(action = org.hibernate.annotations.NotFoundAction.IGNORE)
+    private Purchase purchase;
 
 }

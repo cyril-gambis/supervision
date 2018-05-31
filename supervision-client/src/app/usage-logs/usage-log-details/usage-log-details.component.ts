@@ -40,13 +40,13 @@ export class UsageLogDetailsComponent implements OnInit {
         this.customerService.getCustomer(this.id)
           .subscribe(customer => {
             this.customer = customer
-            this.getOverviewLogs();
+            this.getLastUsageLogs();
           });
       }
     });      
   }
 
-  getOverviewLogs() {
+  getLastUsageLogs() {
     this.usageLogService.getLastOverviewLogs(this.customer.id)
       .subscribe(data => this.usageLogs = data);
   }
