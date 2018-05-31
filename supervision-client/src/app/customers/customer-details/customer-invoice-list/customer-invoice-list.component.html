@@ -1,0 +1,40 @@
+<h2 class="dialog-title">Invoice list</h2>
+
+<div class="content">
+
+  <mat-table [dataSource]="invoices">
+    <ng-container matColumnDef="invoiceNumber">
+      <mat-header-cell *matHeaderCellDef> # </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row.invoiceNumber }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="title">
+      <mat-header-cell *matHeaderCellDef> Title </mat-header-cell>
+      <mat-cell *matCellDef="let row">{{ row.title }}</mat-cell>
+    </ng-container>
+  
+    <ng-container matColumnDef="invoiceDate">
+      <mat-header-cell *matHeaderCellDef> Invoice Date </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row.invoiceDate | date: 'dd/MM/y' }} </mat-cell>
+    </ng-container>
+  
+    <ng-container matColumnDef="amount">
+      <mat-header-cell *matHeaderCellDef> Amount </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ formatAmount(row) | currency:'EUR':'symbol'}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="invoiceStatus">
+      <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+      <mat-cell *matCellDef="let row" [ngClass]="statusClass(row)"> {{ formatStatus(row) }} </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
+    <mat-row *matRowDef="let myRowData; columns: columnsToDisplay"></mat-row>
+  
+  </mat-table>
+
+</div>
+
+<div class="button-bar">
+  <button mat-button mat-dialog-close>Close</button>
+</div>

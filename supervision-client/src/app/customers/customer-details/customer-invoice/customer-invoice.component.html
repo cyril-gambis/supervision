@@ -1,0 +1,47 @@
+<div class="panel">
+  <div class="panel-title-6">Invoices</div>
+
+  <div class="panel-content">
+
+    <div *ngIf="lastInvoice">
+
+      <app-field [title]="'Total paid'" [value]="formatRawAmount(totalAmount) | currency:'EUR':'symbol'" [fieldClass]="'title-value'"></app-field>
+
+      <div class="field-section-title">Last invoice</div>
+
+      <div style="padding: 10px 0 15px;">
+        {{ lastInvoice?.title }}
+      </div>
+
+      <app-field [title]="'Invoice date'" [value]="formatDate(lastInvoice.invoiceDate)"></app-field>
+
+      <app-field [title]="'Invoice #'" [value]="lastInvoice.invoiceNumber"></app-field>
+      <app-field [title]="'Amount'" [value]="formatAmount(lastInvoice) | currency:'EUR':'symbol'"></app-field>
+
+      <app-field [title]="'Subscr. start'" [value]="formatDate(lastInvoice.subscriptionStartDate)"></app-field>
+      <app-field [title]="'Subscr. end'" [value]="formatDate(lastInvoice.subscriptionEndDate)"></app-field>
+
+      <app-field [title]="'Status'" [value]="formatStatus(lastInvoice)" [valueClass]="statusClass(lastInvoice)"></app-field>
+
+      <div class="field-section-title">Payment</div>
+
+      <app-field [title]="'Payment date'" [value]="formatDate(lastInvoice.paymentDate)"></app-field>
+
+    </div>
+
+    <div>
+      <button mat-raised-button (click)="displayAll()" class="centered-button">
+        <mat-icon class="menu-icon">local_atm</mat-icon> See all
+    </button>
+    </div>
+
+<!--
+    <div class="users-content">
+      <div class="spinner-container" *ngIf="loading">
+          <mat-spinner [diameter]="50"></mat-spinner>
+      </div>
+    </div>
+-->
+  </div>
+
+</div>

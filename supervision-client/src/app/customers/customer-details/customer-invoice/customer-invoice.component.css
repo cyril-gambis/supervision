@@ -1,0 +1,36 @@
+.details-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.main-info {
+    min-width: 30%;
+    max-width: 30%;
+    flex-grow: 0;
+    flex-shrink: 0;
+}
+
+.panel {
+    flex: 1 1 auto;
+}
+
+.main-info-fields {
+    
+}
+
+.invoice-title {
+    text-align: center;
+    font-size: 20px;
+    padding: 5px 0;
+}
+
+.invoices-panel {
+    min-width: 35%;
+    max-width: 35%;
+    flex-grow: 0;
+    flex-shrink: 0;
+}
+
+.users-panel .panel-content {
+    padding-bottom: 10px;
+}
