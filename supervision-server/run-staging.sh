@@ -1,1 +1,1 @@
-SPRING_PROFILES_ACTIVE=staging mvn spring-boot:run
+SPRING_PROFILES_ACTIVE=staging mvn3 spring-boot:run
