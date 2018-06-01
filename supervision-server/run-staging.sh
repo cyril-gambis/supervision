@@ -1,1 +1,1 @@
-mvn3 spring-boot:run -Dspring.profiles.active=qa
+SPRING_PROFILES_ACTIVE=staging mvn spring-boot:run
