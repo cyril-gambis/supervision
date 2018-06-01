@@ -1,1 +1,1 @@
-mvn spring-boot:run -Dspring.profiles.active=prod
+SPRING_PROFILES_ACTIVE=prod mvn spring-boot:run
