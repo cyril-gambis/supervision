@@ -32,4 +32,7 @@ public interface NbHitsPerMonthRepository extends JpaRepository<NbHitsPerMonth, 
 
 	NbHitsPerMonth findTopByCustomerIdOrderByCalculationDateDesc(Long customerId);
 
+	@Transactional
+	Long deleteByCustomerId(Long customerId);
+
 }

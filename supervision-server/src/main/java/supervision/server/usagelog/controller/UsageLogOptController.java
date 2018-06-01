@@ -167,7 +167,7 @@ public class UsageLogOptController {
 		int nbLinesComputed = 0;
 		
 		// reset nb hits per month repository for this customer
-		nbHitsPerDayRepository.deleteByCustomerId(customerId);
+		nbHitsPerMonthRepository.deleteByCustomerId(customerId);
 		
 		for (Long id : pageIds) {
 			List<CountByUserByMonth> countByUser =
