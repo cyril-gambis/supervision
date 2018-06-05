@@ -3,9 +3,10 @@ variables:
 
 stages:
   - build
+  - package
 
 build-supervision-server-data:
-  image: maven:3.5-jdk8
+  image: maven:3.5-jdk-8
   stage: build
   script:
     - mvn clean verify -DskipTests $MAVEN_CLI_OPTS
@@ -21,7 +22,7 @@ build-supervision-server-data:
     - docker
 
 build-supervision-registry:
-  image: maven:3.5-jdk8
+  image: maven:3.5-jdk-8
   stage: build
   script:
     - mvn clean verify -DskipTests $MAVEN_CLI_OPTS
@@ -35,3 +36,11 @@ build-supervision-registry:
     expire_in: 1 week
   tags:
     - docker
+
+docker-build-supervision-registry:
+  stage: package
+  script:
+    - docker build -t registry.gitlab.com/augeo-software/supervision-registry .
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
+    - docker push registry.gitlab.com/augeo-software/supervision-registry
+  
