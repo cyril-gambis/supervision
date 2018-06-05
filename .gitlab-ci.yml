@@ -1,0 +1,37 @@
+variables:
+  MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version"
+
+stages:
+  - build
+
+build-supervision-server-data:
+  image: maven:3.5-jdk8
+  stage: build
+  script:
+    - mvn clean verify -DskipTests $MAVEN_CLI_OPTS
+  cache:
+    paths:
+      - ./.m2/repository
+    key: m2
+  artifacts:
+    paths:
+      - supervision-server-data/target/*.jar
+    expire_in: 1 week
+  tags:
+    - docker
+
+build-supervision-registry:
+  image: maven:3.5-jdk8
+  stage: build
+  script:
+    - mvn clean verify -DskipTests $MAVEN_CLI_OPTS
+  cache:
+    paths:
+      - ./.m2/repository
+    key: m2
+  artifacts:
+    paths:
+      - supervision-registry/target/*.jar
+    expire_in: 1 week
+  tags:
+    - docker
