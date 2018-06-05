@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Observable } from "rxjs/Observable";
 
 import 'rxjs/add/operator/map';
@@ -42,7 +42,7 @@ export class AuthenticationService {
         (Client secret is not really relevant for a javascript SPA)
     */
     login(username: string, password: string): Observable<User> {
-        let params = new URLSearchParams();
+        let params = new HttpParams();
         params.append('username', username);
         params.append('password', password);
         params.append('grant_type', 'password');
