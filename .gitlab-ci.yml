@@ -9,7 +9,7 @@ build-supervision-server-data:
   image: maven:3.5-jdk-8
   stage: build
   script:
-    - mvn clean verify -DskipTests $MAVEN_CLI_OPTS -f /supervision-server-data/pom.xml
+    - mvn clean verify -DskipTests $MAVEN_CLI_OPTS -f ./supervision-server-data/pom.xml
   cache:
     paths:
       - ./.m2/repository
@@ -25,7 +25,7 @@ build-supervision-registry:
   image: maven:3.5-jdk-8
   stage: build
   script:
-    - mvn clean verify -DskipTests $MAVEN_CLI_OPTS -f /supervision-registry/pom.xml
+    - mvn clean verify -DskipTests $MAVEN_CLI_OPTS -f ./supervision-registry/pom.xml
   cache:
     paths:
       - ./.m2/repository
