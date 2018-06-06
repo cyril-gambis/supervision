@@ -38,6 +38,7 @@ build-supervision-registry:
     - docker
 
 docker-build-supervision-registry:
+  image: docker:latest
   stage: package
   script:
     - docker build -t registry.gitlab.com/augeo-software/supervision-registry .
