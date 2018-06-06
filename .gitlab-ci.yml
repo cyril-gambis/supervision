@@ -5,21 +5,21 @@ stages:
   - build
   - package
 
-build-supervision-server-data:
-  image: maven:3.5-jdk-8
-  stage: build
-  script:
-    - mvn clean verify -DskipTests $MAVEN_CLI_OPTS -f ./supervision-server-data/pom.xml
-  cache:
-    paths:
-      - ./.m2/repository
-    key: m2
-  artifacts:
-    paths:
-      - supervision-server-data/target/*.jar
-    expire_in: 1 week
-  tags:
-    - docker
+# build-supervision-server-data:
+#   image: maven:3.5-jdk-8
+#   stage: build
+#   script:
+#     - mvn clean verify -DskipTests $MAVEN_CLI_OPTS -f ./supervision-server-data/pom.xml
+#   cache:
+#     paths:
+#       - ./.m2/repository
+#     key: m2
+#   artifacts:
+#     paths:
+#       - supervision-server-data/target/*.jar
+#     expire_in: 1 week
+#   tags:
+#     - docker
 
 build-supervision-registry:
   image: maven:3.5-jdk-8
