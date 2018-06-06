@@ -43,4 +43,6 @@ docker-build-supervision-registry:
     - docker build -t registry.gitlab.com/augeo-software/supervision-registry .
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
     - docker push registry.gitlab.com/augeo-software/supervision-registry
+  tags:
+    - docker
   
