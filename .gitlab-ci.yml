@@ -60,7 +60,8 @@ build-and-deploy-supervision-client:
   image: trion/ng-cli-karma
   stage: deploy
   environment: Staging
-  only: master
+  only:
+    - master
   script:
     - npm install
     - ./node_modules/@angular/cli/bin/ng build --progress false --env=qa
