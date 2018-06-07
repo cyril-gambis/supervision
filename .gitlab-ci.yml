@@ -2,7 +2,8 @@ variables:
   MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version"
 
 cache:
-  - node_modules/
+  paths:
+    - node_modules/
 
 stages:
   - build
