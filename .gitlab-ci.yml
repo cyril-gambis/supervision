@@ -7,6 +7,7 @@ cache:
 stages:
   - build
   - package
+  - deploy
 
 # build-supervision-server-data:
 #   image: maven:3.5-jdk-8
@@ -50,9 +51,13 @@ stages:
 #   tags:
 #     - docker
 
-build-supervision-client:
+# Install sshpass in order to login to ssh prompt with password
+before-script:
+  - apt-get update -qq && apt-get install -y -qq sshpass
+
+build-and-deploy-supervision-client:
   image: trion/ng-cli-karma
-  stage: build
+  stage: deploy
   environment: Staging
   only: master
   script:
@@ -60,3 +65,12 @@ build-supervision-client:
     - ./node_modules/@angular/cli/bin/ng build --progress false --env=qa
     - cd dist/
     - ls
+    - sshpass -V
+    # $USER_PASS variable is set in gitlab setting for CI / CD
+    - export SSHPASS=$USER_PASS
+    # If necessary (error on permission denied while copying files via scp)
+    #- sudo chown -R admin:admin /path/to/files (to give rights to admin)
+    - sshpass -e scp -o stricthostkeychecking=no -r . admin@home.f10web.com:/home/admin/supervision/supervision/supervision-client/dist
+
+# run a nginx server for supervision
+#  docker run --name nginx-sup-client -v /home/admin/supervision/supervision/supervision-client/dist:/usr/share/nginx/html:ro -it -p 4404:80 nginx
