@@ -1,6 +1,9 @@
 variables:
   MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version"
 
+cache:
+  - node_modules/
+
 stages:
   - build
   - package
@@ -21,29 +24,39 @@ stages:
 #   tags:
 #     - docker
 
-build-supervision-registry:
-  image: maven:3.5-jdk-8
-  stage: build
-  script:
-    - mvn clean verify -DskipTests $MAVEN_CLI_OPTS -f ./supervision-registry/pom.xml
-  cache:
-    paths:
-      - ./.m2/repository
-    key: m2
-  artifacts:
-    paths:
-      - supervision-registry/target/*.jar
-    expire_in: 1 week
-  tags:
-    - docker
+# build-supervision-registry:
+#   image: maven:3.5-jdk-8
+#   stage: build
+#   script:
+#     - mvn clean verify -DskipTests $MAVEN_CLI_OPTS -f ./supervision-registry/pom.xml
+#   cache:
+#     paths:
+#       - ./.m2/repository
+#     key: m2
+#   artifacts:
+#     paths:
+#       - supervision-registry/target/*.jar
+#     expire_in: 1 week
+#   tags:
+#     - docker
 
-docker-build-supervision-registry:
-  image: docker:latest
-  stage: package
+# docker-build-supervision-registry:
+#   image: docker:latest
+#   stage: package
+#   script:
+#     - docker build -t registry.gitlab.com/augeo-software/supervision/supervision-registry ./supervision-registry
+#     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
+#     - docker push registry.gitlab.com/augeo-software/supervision-registry
+#   tags:
+#     - docker
+
+build-supervision-client:
+  image: trion/ng-cli-karma
+  stage: build
+  environment: Staging
+  only: master
   script:
-    - docker build -t registry.gitlab.com/augeo-software/supervision/supervision-registry ./supervision-registry
-    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
-    - docker push registry.gitlab.com/augeo-software/supervision-registry
-  tags:
-    - docker
-  
+    - npm install
+    - ./node_modules/@angular/cli/bin/ng build --progress false --env=qa
+    - cd dist/
+    - ls
