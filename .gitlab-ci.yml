@@ -63,6 +63,7 @@ build-and-deploy-supervision-client:
   only:
     - master
   script:
+    - cd supervision-client
     - npm install
     - ./node_modules/@angular/cli/bin/ng build --progress false --env=qa
     - cd dist/
