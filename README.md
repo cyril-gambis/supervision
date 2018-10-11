@@ -4,11 +4,15 @@ Application microservices de supervision basée sur stack Spring Cloud / Netflix
 
 ## Serveurs Spring
 
+3 composants
+
 1 registry Spring cloud Eureka avec équilibreur de charge Ribbon
+
 1 appli B.I. + Authentification
 - fournit une API RESTful basée sur Spring Data JPA
-- implémente l'authentification OAuth2 avec Spring Security, avec token JWT
+- implémente l'authentification OAuth2 avec Spring Security (password flow), avec token JWT
 - connexion à base de données mySQL dédiée
+
 1 appli métier
 - fournit une API RESTful basée sur Spring Data JPA
 - connexion à base de données mySQL métier
